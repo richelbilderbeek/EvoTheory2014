@@ -1,0 +1,36 @@
+print("Find out all optimal vigilances, assuming all individuals do the same; the individuals do not cheat")$
+print("Write down all formula's")$
+print("F: Food intake")$
+print("S: Survival")$
+print("W: Fitness")$
+print("v: vigilance")$
+print("n: group size")$
+S(vm,vr,n) := 1.0 - 
+  (
+    ( 
+      (1.0-vm) * 
+        ((1.0-vr)^(n-1.0))
+    ) 
+    * (1.0/n)
+  )$
+F(v) := 1.0 - (v^2.0)$
+W(vm,vr,n) := ''(S(vm,vr,n) + F(vm))$
+print("Determine which vigilance is optimal, by setting dW/dvm=0 (determine the differential of vigilance of the mutant)")$
+print("dW: dW/dvm")$
+dW(vm,vr,n) := ''(diff(W(vm,vr,n),vm))$
+print("General solution from n=3:")$
+solve(dW(v,v,3) = 0);
+print("General solution from n=3 where v e [0,1]:")$
+solutions:solve(dW(v,v,3) = 0);
+
+disp("number of solutions: ",length(solutions))$
+/* if is(rhs(solutions[1]) < 1) then print(rhs(solutions[1]))$ */
+
+disp("Displaying solutions")$
+for i:1 thru length(solutions) do 
+(
+  if is(rhs(solutions[i]) >= 0.0) and is(rhs(solutions[i]) <= 1.0) then 
+  (
+    disp(rhs(solutions[i]))
+  )
+)$

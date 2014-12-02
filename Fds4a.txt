@@ -1,0 +1,19 @@
+print("Find out ESS");
+print("Write down all formula's");
+print("F: Food intake");
+print("S: Survival");
+print("W: Fitness");
+print("vr: vigilance of residents");
+print("vm: vigilance of mutant");
+print("n: group size");
+S(v,n) := 1 - (((1-v)^2) * (1/n));
+F(v) := 1 - (v^2);
+W(v,n) := ''(S(v,n) + F(v));
+print("Determine which vigilance is optimal, by setting dW/dv=0");
+print("dW: dW/dv");
+dW(v,n) := ''(diff(W(v,n),v));
+print("Optimal vigilance for n = 2:");
+solve(dW(v,2) = 0);
+print("Optimal vigilance for n = 3:");
+solve(dW(v,3) = 0);
+
