@@ -1,0 +1,50 @@
+print("The fitness of the mutant is dependent on the population");
+
+print("F: Fecundity");
+print("v: fraction of time being vigilant");
+F(v) := 1 - (v^2);
+/* plot2d(F(v),[v,0,1]); */
+
+print("Sn: survival");
+print("v: fraction of time being vigilant of mutant");
+print("v_hat: fraction of time being vigilant of resident population");
+print("n: group size in number of individuals");
+Sn(v,v_hat,n) := 1 - (1/n)*((1-v_hat)^(n-1));
+/* plot3d(Sn(v,v_hat,2),[v_hat,0,1],[v,0,1]); */
+
+print("Wn: Absolute fitness");
+Wn(v,v_hat,n) := Sn(v,v_hat,n) + F(v);
+/* plot3d(Wn(v,v_hat,2),[v_hat,0,1],[v,0,1]); */
+
+print("Wmut: Absolute fitness of mutant");
+Wmut(v,v_hat,n) := Wn(v,v_hat,n);
+/* plot3d(Wmut(v,v_hat,2),[v_hat,0,1],[v,0,1]); */
+
+print("Absolute fitness of resident");
+Wres(v_hat,n) := Wn(v_hat,v_hat,n);
+/* plot2d(Wres(v_hat,2),[v_hat,0,1]); */
+
+print("Relative fitness of mutant");
+dWmut(v,v_hat,n) := Wmut(v,v_hat,n) - Wres(v_hat,n);
+/* plot3d(dWmut(v,v_hat,2),[v_hat,0,1],[v,0,1]); */
+
+
+print("(1) Determine fitness gradient: a mutant can invade if first derivative to x is bigger than zero");
+FitnessGradient(v,v_hat,n) := ''(diff(dWmut(v,v_hat,n),v));
+/* plot3d(FitnessGradient(v,v_hat,2),[v,0,1],[v_hat,0,1]); */
+
+print("(2) Determine Evolutionary Singular Strategies");
+solve(FitnessGradient(v_hat,v_hat,n) = 0);
+print("We solve it by insight: v_hat = 0, so v_star = 0");
+
+print("(3) Determine ESS: ESS is stable if second derivative to x is smaller than zero");
+Ess(v,v_hat,n) := ''(diff(dWmut(v,v_hat,n),v,2));
+/* plot3d(Ess(v,v_hat,2),[v,0,1],[v_hat,0,1]); */
+print("Ess(v,v_hat) = -2");
+print("So, it is an ESS");
+
+print("(4) Convergence stability");
+print("If this is below zero, then the x_star is attainable");
+ConvergenceStability(v_hat,n) := ''(diff(FitnessGradient(v_hat,v_hat,n),v_hat));
+
+print("ConvergenceStability(v_hat,n) = -2, which is below zero, thus the ESS is attainable");
