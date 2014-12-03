@@ -1,0 +1,56 @@
+/*
+
+If an individual has a chance of m to die per year, its life expectancy is 1/m years
+
+print("Lemma: survival_rate = 1 / mortality_rate")$
+print("L: Life expectancy (year)")$
+print("m: Mortality (chance to die per year)")$
+*/
+
+Lst(s,t) := (s^(t-1))*(1-s);
+Lmt(m,t) := ((1-m)^(t-1))*m;
+
+max_t:100;
+
+Ls(s) := sum(Lst(s,t) * t,t,1,max_t);
+Lm(m) := sum(Lmt(m,t) * t,t,1,max_t);
+L(m) := sum((((1-m)^(t-1))*m) * t,t,1,max_t);
+M(m) := m * sum(t * ((1-m)^(t-1)),t,1,max_t);
+Goal(x) := 1 / x;
+
+/*
+print("Maxima does not figure out that all these are equal");
+is(Lm(x) = L(m));
+is(L(x) = M(m));
+is(Goal(x) = M(m));
+
+print("Yet, they are");
+plot2d([Lm(m),Goal(m),L(m),M(m)],[m,0.05,0.9]);
+*/
+
+print("Because M(m) should be Goal(x), I can freely divide both by m");
+N_quick(m) := M(m) / m;
+N(m) := sum(t * ((1-m)^(t-1)),t,1,max_t);
+Goal2_quick(m) := Goal(m) / m;
+Goal2(m) := 1 / (m^2);
+plot2d([N_quick(m),N(m),Goal2(m), Goal2_quick(m)],[m,0.05,0.9]);
+
+print("Now N(m) should be Goal2(x)");
+
+
+
+/*
+So, proove that 
+ L(m) := Goal(x)
+ sum(Lmt(m,t) * t,t,1,100) = 1 / m
+
+
+
+S(s) := sum( (s^(k-1)) * (1-s) * k, k, 1, 10);  
+print("Richel form");
+R(s) := sum( (s^k) * s * (k+1), k, 1, 10); 
+T(s) := 1.0 / S(s);
+U(s) := 1.0 / R(s);
+
+plot2d([S,R,T,U],[s,0.1,0.9]);
+*/

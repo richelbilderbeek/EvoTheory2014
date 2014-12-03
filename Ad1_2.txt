@@ -1,0 +1,66 @@
+print("The fitness of the mutant is dependent on the population");
+
+print("Absolute fitness");
+W(x,x_hat) := (x - x_hat) * ((a * x) - (b * x_hat));
+
+print("Absolute fitness of mutant");
+Wmut(x,x_hat) := W(x,x_hat);
+
+print("Absolute fitness of resident");
+Wres(x_hat) := W(x_hat,x_hat);
+
+print("Relative fitness of mutant");
+dWmut(x,x_hat) := Wmut(x,x_hat) - Wres(x_hat);
+
+print("Relative fitness of mutant = absolute fitness of mutant, by coincidence");
+is(dWmut(x,x_hat) = Wmut(x,x_hat));
+
+/*
+a:10;
+b:-10;
+plot3d(dWmut(x,x_hat),[x,-1,1],[x_hat,-1,1]);
+kill(a);
+kill(b);
+*/
+
+print("(1) Determine fitness gradient: a mutant can invade if first derivative to x is bigger than zero");
+FitnessGradient(x,x_hat) := ''(diff(dWmut(x,x_hat),x));
+
+
+/*
+a:10;
+b:-10;
+plot3d(W1(x,x_hat),[x,-1,1],[x_hat,-1,1]);
+kill(a);
+kill(b);
+*/
+
+print("(2) Determine Evolutionary Singular Strategies");
+a:b+1;
+solve(FitnessGradient(x_hat,x_hat) = 0);
+kill(a);
+print("We solve it by insight: x_hat = 0, so x_star = 0");
+x_star:0;
+
+
+print("(3) Determine ESS: ESS is stable if second derivative to x is smaller than zero");
+Ess(x,x_hat) := ''(diff(dWmut(x,x_hat),x,2));
+
+print("Ess(x,x_hat) = 2 * a");
+print("So, it is an ESS iff a < 0");
+
+
+/*
+
+a: 10;
+b:-10;
+plot3d(dWmut(x,x_hat),[x,-1,1],[x_hat,-1,1]);
+contour_plot(dWmut(x,x_hat),[x,-1,1],[x_hat,-1,1]);
+
+*/
+
+print("(4) Convergence stability");
+print("If this is below zero, then the x_star is attainable");
+ConvergenceStability(x_hat) := ''(diff(FitnessGradient(x_hat,x_hat),x_hat));
+print("So, ConvergenceStability(x_hat) = a - b");
+print("So, convergence is stable if a > b");
