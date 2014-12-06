@@ -39,7 +39,27 @@ Plugging in the four functions (with $a=a\_star$) above, this simplifies to:
 
 The relative fitness of the mutant on the resident population:
 
+\input{tmp_RelativeFitness_1.tex}
 
+Filling in both fitness functions:
+
+\input{tmp_RelativeFitness_2.tex}
+
+For an ESS, the fitness of a mutant must always be lower in a resident population. To calculate this, we need the partial derivative of the above fitness function to $a$.
+
+\input{tmp_DeltaFitness_1.tex}
+
+Which is equal to:
+
+\input{tmp_DeltaFitness_2.tex}
+
+Filling in $e_son=10$ and $e_daughter=10$:
+
+\input{tmp_Ess_1.tex}
+
+Which is equal to:
+
+\input{tmp_Ess_2.tex}
 
 
 \subsection{(c.1) Surviving sons}

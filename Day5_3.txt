@@ -114,22 +114,24 @@ FitnessResident(a_star,a_star) := W(a_star,a_star)
 tex(FitnessResident(a,a_star),"tmp_FitnessResident_2.tex");
 
 /* Relative fitness */
+RelativeFitness(a,a_star) := dW(a,a_star) = W(a,a_star) - dW(a_star,a_star);
+tex(RelativeFitness(a,a_star),"tmp_RelativeFitness_1.tex");
+RelativeFitness(a,a_star) := dW(a,a_star) = ''(rhs(FitnessMutant(a,a_star))) - ''(rhs(FitnessResident(a_star,a_star)));
+tex(RelativeFitness(a,a_star),"tmp_RelativeFitness_2.tex");
 
+/* Partial derivative */
+DeltaFitness(a,a_star) := diff(rhs(RelativeFitness(a,a_star)),a);
 
+DeltaFitness(a,a_star) := ''(diff(rhs(RelativeFitness(a,a_star)),a));
+tex(DeltaFitness(a,a_star),"tmp_DeltaFitness_1.tex");
+DeltaFitness(a,a_star) := ''(ratsimp(diff(rhs(RelativeFitness(a,a_star)),a)));
+tex(DeltaFitness(a,a_star),"tmp_DeltaFitness_2.tex");
 
-
-
-Fitness(a,a_star);
-
-
-/* Fisher again */
-/*
-Fisher(s,a) := v_male / v_female = f(s,a_star) / m(s,a_star);
-tex(Fisher(s,a),"tmp_Fisher_1.tex");
-
-Fisher(a) := v_male / v_female = f(s,a_star) / m(s,a_star);
-tex(Fisher(s,a),"tmp_Fisher_1.tex");
-*/
-
-
+e_daughter:10;
+e_son:10;
+Ess(a_star) := ''(DeltaFitness(a_star,a_star));
+tex(Ess(a_star),"tmp_Ess_1.tex");
+Ess(a_star) := ratsimp(''(DeltaFitness(a_star,a_star)));
+tex(Ess(a_star),"tmp_Ess_2.tex");
+solve(Ess(a_star),[a_star,e_abort]);
 
