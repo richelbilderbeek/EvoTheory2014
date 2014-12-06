@@ -1,0 +1,43 @@
+W(x) := m(x)*v_m + f(x) * v_f;
+Fisher(x_star) := v_m / v_f = f(x_star) / m(x_star);
+
+print("Clutch size formula for a=0");
+C_a_zero(s) := C(s) = E / ( (s * e_son) + ((1-s) * e_daughter) );
+tex(C_a_zero(s),"tmp_C_a_zero.tex");
+
+print("Clutch size formula for a=1");
+C_a_one(s) := C(s) = E / ( (s * e_abort) + ((1-s) * e_daughter) );
+tex(C_a_one(s),"tmp_C_a_one.tex");
+
+print("General Clutch size formula");
+ClutchSize(s,a) := C(s,a) 
+  = E 
+  / ( 
+      (s * (a * e_abort) * ((1-a) * e_son)) 
+      + ((1-s) * e_daughter) 
+    )
+;
+/* tex(C(s,a),"tmp_C.tex"); */
+tex(ClutchSize(s,a),"tmp_C_s_a.tex");
+tex(ClutchSize(0.5,a),"tmp_C.tex");
+
+
+C(a) = E /( (0.5 * (a*e_abort) * ((1-a) * e_son)) + (0.5 * e_daughter)  );
+
+
+print("S(a): Secondary sex ration");
+print("a (fraction of male abortions)");
+
+S(a) := 0.5 * (1.0 - a);
+
+plot2d(
+  S(a),[a,0,1],[y,0,1],
+  [title,"Secondary sex ration for different male abortion rates"],
+  [xlabel,"a (fraction of male abortions)"],
+  [ylabel,"S: Secondary sex ratio"],
+  [ps_file, "plot_s.ps"]
+);
+
+
+
+

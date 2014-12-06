@@ -9,6 +9,7 @@ print("Sn: survival");
 print("v: fraction of time being vigilant of mutant");
 print("v_hat: fraction of time being vigilant of resident population");
 print("n: group size in number of individuals");
+
 Sn(v,v_hat,n) := 1 - (1/n)*((1-v_hat)^(n-1));
 /* plot3d(Sn(v,v_hat,2),[v_hat,0,0.5],[v,0,0.5]); */
 

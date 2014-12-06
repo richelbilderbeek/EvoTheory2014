@@ -1,0 +1,6 @@
+tmp_*.*
+*.aux
+*.log
+*.txt~
+*.tex.bak
+*.synctex.gz

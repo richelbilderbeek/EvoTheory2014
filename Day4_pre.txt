@@ -1,0 +1,12 @@
+print("Creating a Leslie matrix");
+
+M: matrix (
+  [0.0, 0.5, 0.2 ], 
+  [0.6, 0.0, 0.0 ],
+  [0.0, 0.3, 0.0 ],
+  [0.0, 0.0, 0.1 ]
+  );
+
+N: transpose(matrix( [100,0,0,0] ));
+
+N_next:M.N;

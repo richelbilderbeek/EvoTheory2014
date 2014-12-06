@@ -1,0 +1,45 @@
+\documentclass[11]{article}
+
+\begin{document}
+
+
+Clutch size is dependent on multiple variables:
+
+\bigskip
+
+\begin{tabular}{ | r | l | }
+  \hline
+  Symbol & description \\ 
+  \hline
+  $a$ & fraction of sons aborted \\
+  $C$ & clutch size \\
+  $E$ & total energy invested in clutch \\
+  $e\_daughter$ & energy investment to produce one healthy daughter \\
+  $e\_son$ & energy investment to produce one healthy son \\
+  $s$ & primary sex ratio \\
+  \hline
+\end{tabular}
+
+\bigskip
+
+Clutch size general formula without abortion:
+
+\input{tmp_C_a_zero.tex}
+
+Clutch size general formula with all sons aborted:
+
+\input{tmp_C_a_one.tex}
+
+Clutch general formula, where $a$ denotes the fraction of sons that are aborted:
+
+\input{tmp_C_s_a.tex}
+
+Assuming $s=0.5$, this results in:
+
+\input{tmp_C.tex}
+
+
+
+
+
+\end{document}
