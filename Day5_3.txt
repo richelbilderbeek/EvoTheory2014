@@ -1,5 +1,6 @@
-W(x) := m(x)*v_m + f(x) * v_f;
-Fisher(x_star) := v_m / v_f = f(x_star) / m(x_star);
+kill(all);
+
+/* CLUTCH SIZE */
 
 print("Clutch size formula for a=0");
 C_a_zero(s) := C(s) = E / ( (s * e_son) + ((1-s) * e_daughter) );
@@ -9,35 +10,126 @@ print("Clutch size formula for a=1");
 C_a_one(s) := C(s) = E / ( (s * e_abort) + ((1-s) * e_daughter) );
 tex(C_a_one(s),"tmp_C_a_one.tex");
 
-print("General Clutch size formula");
+print("General clutch size formula");
 ClutchSize(s,a) := C(s,a) 
   = E 
   / ( 
-      (s * (a * e_abort) * ((1-a) * e_son)) 
-      + ((1-s) * e_daughter) 
+    s * 
+      (
+        (a * e_abort) + ((1-a) * e_son) + ((1-s) * e_daughter)
+      ) 
     )
 ;
-/* tex(C(s,a),"tmp_C.tex"); */
 tex(ClutchSize(s,a),"tmp_C_s_a.tex");
 tex(ClutchSize(0.5,a),"tmp_C.tex");
 
+/* SECONDARY SEX RATIO */
 
-C(a) = E /( (0.5 * (a*e_abort) * ((1-a) * e_son)) + (0.5 * e_daughter)  );
-
-
-print("S(a): Secondary sex ration");
-print("a (fraction of male abortions)");
-
-S(a) := 0.5 * (1.0 - a);
+print("Sex ratio: fraction of sons (0: all females, 1: all ");
+tex("S(a=0) = 1/2","tmp_S_a_zero.tex");
+tex("S(a=1) = 0","tmp_S_a_one.tex");
+SecSexRatio(a) := S(a) = 0.5 - (0.5 * a);
+tex(SecSexRatio(a),"tmp_S.tex");
 
 plot2d(
-  S(a),[a,0,1],[y,0,1],
+  rhs(SecSexRatio(a)),[a,0,1],[y,0,1],
   [title,"Secondary sex ration for different male abortion rates"],
   [xlabel,"a (fraction of male abortions)"],
   [ylabel,"S: Secondary sex ratio"],
-  [ps_file, "plot_s.ps"]
+  [png_file, "~/GitHubs/EvoTheory2014/tmp_plot_s.png"]
 );
 
+/* SHAW-MOHLER */
+
+/* Surving sons, surving daughters */
+
+SurvivingSons(s,a) := m(s,a) = C(s,a) * S(a) * P_son;
+tex(SurvivingSons(s,a),"tmp_SurvivingSons_1.tex");
+SurvivingSons(s,a) := m(s,a) = ''(rhs(ClutchSize(s,a))) * S(a) * P_son;
+tex(SurvivingSons(s,a),"tmp_SurvivingSons_2.tex");
+
+SurvivingDaughters(s,a) := f(s,a) = C(s,a) * (1-S(a)) * P_daughter;
+tex(SurvivingDaughters(s,a),"tmp_SurvivingDaughters_1.tex");
+SurvivingDaughters(s,a) := f(s,a) = ''(rhs(ClutchSize(s,a))) * (1-S(a)) * P_daughter;
+tex(SurvivingDaughters(s,a),"tmp_SurvivingDaughters_2.tex");
+
+/* Simplification, fill in sex ratio from here */
+s:0.5;
+SurvivingSons(a) := m(a) = ''(rhs(ClutchSize(s,a))) * S(a) * P_son;
+tex(SurvivingSons(a),"tmp_SurvivingSons_3.tex");
+SurvivingDaughters(a) := f(a) = ''(rhs(ClutchSize(s,a))) * (1-S(a)) * P_daughter;
+tex(SurvivingDaughters(a),"tmp_SurvivingDaughters_3.tex");
+
+SurvivingSons(a) := m(a) = ''(rhs(ClutchSize(s,a))) * ''(rhs(SecSexRatio(a))) * P_son;
+tex(SurvivingSons(a),"tmp_SurvivingSons_4.tex");
+SurvivingDaughters(a) := f(a) = ''(rhs(ClutchSize(s,a))) * ''((1-rhs(SecSexRatio(a)))) * P_daughter;
+tex(SurvivingDaughters(a),"tmp_SurvivingDaughters_4.tex");
+
+
+/* Reproductive values */
+
+ReproValueMale(a_star) := v_male(a_star) = alpha * (1 / m(a_star));
+tex(ReproValueMale(a_star),"tmp_ReproValueMale_1.tex");
+ReproValueFemale(a_star) := v_female(a_star) = alpha * (1 / f(a_star));
+tex(ReproValueFemale(a_star),"tmp_ReproValueFemale_1.tex");
+
+alpha:0.5;
+ReproValueMale(a_star) := v_male(a_star) = alpha * (1 / m(a_star));
+tex(ReproValueMale(a_star),"tmp_ReproValueMale_2.tex");
+ReproValueFemale(a_star) := v_female(a_star) = alpha * (1 / f(a_star));
+tex(ReproValueFemale(a_star),"tmp_ReproValueFemale_2.tex");
+
+ReproValueMale(a_star) := v_male(a_star) = alpha * (1 / ''(rhs(SurvivingSons(a_star))));
+tex(ReproValueMale(a_star),"tmp_ReproValueMale_3.tex");
+ReproValueFemale(a_star) := v_female(a_star) = alpha * (1 / ''(rhs(SurvivingDaughters(a_star))));
+tex(ReproValueFemale(a_star),"tmp_ReproValueFemale_3.tex");
+
+
+/* FITNESS CALCULATIONS */
+
+/* Fitness mutant */
+
+FitnessMutant(a,a_star) := W(a,a_star) 
+  = ( m(a) * v_male(a_star) ) 
+  + ( f(a) * v_female(a_star) )
+;
+tex(FitnessMutant(a,a_star),"tmp_FitnessMutant_1.tex");
+FitnessMutant(a,a_star) := W(a,a_star) 
+  = ( ''(rhs(SurvivingSons(a))) * ''(rhs(ReproValueMale(a_star))) ) 
+  + ( ''(rhs(SurvivingDaughter(a))) * ''(rhs(ReproValueFemale(a_star))) )
+;
+tex(FitnessMutant(a,a_star),"tmp_FitnessMutant_2.tex");
+
+/* Fitness resident */
+
+FitnessResident(a_star,a_star) := W(a_star,a_star) 
+  = ( m(a_star) * v_male(a_star) ) 
+  + ( f(a_star) * v_female(a_star) )
+;
+tex(FitnessResident(a,a_star),"tmp_FitnessResident_1.tex");
+FitnessResident(a_star,a_star) := W(a_star,a_star) 
+  = ( ''(rhs(SurvivingSons(a_star))) * ''(rhs(ReproValueMale(a_star))) ) 
+  + ( ''(rhs(SurvivingDaughter(a_star))) * ''(rhs(ReproValueFemale(a_star))) )
+;
+tex(FitnessResident(a,a_star),"tmp_FitnessResident_2.tex");
+
+/* Relative fitness */
+
+
+
+
+
+Fitness(a,a_star);
+
+
+/* Fisher again */
+/*
+Fisher(s,a) := v_male / v_female = f(s,a_star) / m(s,a_star);
+tex(Fisher(s,a),"tmp_Fisher_1.tex");
+
+Fisher(a) := v_male / v_female = f(s,a_star) / m(s,a_star);
+tex(Fisher(s,a),"tmp_Fisher_1.tex");
+*/
 
 
 

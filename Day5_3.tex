@@ -1,7 +1,151 @@
 \documentclass[11]{article}
+\usepackage{graphicx}
 
 \begin{document}
 
+
+\section{(c) Shaw-Mohler}
+
+The fitness of a mutant in a resident population is:
+
+\input{tmp_FitnessMutant_1.tex}
+
+To calculate the fitness of a mutant in a resident population, we'll need:
+
+\begin{itemize}
+  \item $m(a)$: number of surviving sons
+  \item $f(a)$: number of surviving daughters
+  \item $v\_male(a\_star)$: male reproductive value in resident population
+  \item $v\_female(a\_star)$: female reproductive value in resident population
+\end{itemize}
+
+\subsection{(c.5) Fitness}
+
+As a reminder, the fitness formula for a mutant in a resident population is:
+
+\input{tmp_FitnessMutant_1.tex}
+
+Plugging in the four functions above:
+
+\input{tmp_FitnessMutant_2.tex}
+
+The fitness of the resident population is: 
+
+\input{tmp_FitnessResident_1.tex}
+
+Plugging in the four functions (with $a=a\_star$) above, this simplifies to:
+
+\input{tmp_FitnessResident_2.tex}
+
+The relative fitness of the mutant on the resident population:
+
+
+
+
+\subsection{(c.1) Surviving sons}
+
+General formula of surviving sons:
+
+\input{tmp_SurvivingSons_1.tex}
+
+Plug in $C(s,a)$:
+
+\input{tmp_SurvivingSons_2.tex}
+
+Set $s=1/2$:
+
+\input{tmp_SurvivingSons_3.tex}
+
+Also plug in $S(a)$:
+
+\input{tmp_SurvivingSons_4.tex}
+
+\subsection{(c.2) Surviving daughters}
+
+General formula of surviving daughters:
+
+\input{tmp_SurvivingDaughters_1.tex}
+
+Plug in $C(s,a)$:
+
+\input{tmp_SurvivingDaughters_2.tex}
+
+Set $s=1/2$:
+
+\input{tmp_SurvivingDaughters_3.tex}
+
+Also plug in $S(a)$:
+
+\input{tmp_SurvivingDaughters_4.tex}
+
+\subsection{(c.3) Male reproductive value}
+
+General formula for male reproductive value:
+
+\input{tmp_ReproValueMale_1.tex}
+
+Filling in $alpha=1/2$:
+
+\input{tmp_ReproValueMale_2.tex}
+
+Filling in $m(a\_star)$:
+
+\input{tmp_ReproValueMale_3.tex}
+
+\subsection{(c.4) Female reproductive value}
+
+General formula for female reproductive value:
+
+\input{tmp_ReproValueFemale_1.tex}
+
+Filling in $alpha=1/2$:
+
+\input{tmp_ReproValueFemale_2.tex}
+
+Filling in $f(a\_star)$:
+
+\input{tmp_ReproValueFemale_3.tex}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{(b) Secondary sex ratio}
+
+Secondary sex ratio with no sons aborted:
+
+\input{tmp_S_a_zero.tex}
+
+Secondary sex ratio with all aborted:
+
+\input{tmp_S_a_one.tex}
+
+Secondary sex ratio in general:
+
+\input{tmp_S.tex}
+
+Plotted:
+
+\includegraphics[scale=0.5]{tmp_plot_s}
+
+
+
+
+
+
+
+
+
+
+\section{(a) Clutch size}
 
 Clutch size is dependent on multiple variables:
 
@@ -37,9 +181,6 @@ Clutch general formula, where $a$ denotes the fraction of sons that are aborted:
 Assuming $s=0.5$, this results in:
 
 \input{tmp_C.tex}
-
-
-
 
 
 \end{document}
