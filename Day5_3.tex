@@ -4,6 +4,60 @@
 \begin{document}
 
 
+
+
+
+
+
+
+\section{(a) Clutch size}
+
+Clutch size is dependent on multiple variables:
+
+\bigskip
+
+\begin{tabular}{ | r | l | }
+  \hline
+  Symbol & description \\ 
+  \hline
+  $a$ & fraction of sons aborted \\
+  $C$ & clutch size \\
+  $E$ & total energy invested in clutch \\
+  $e\_daughter$ & energy investment to produce one healthy daughter \\
+  $e\_son$ & energy investment to produce one healthy son \\
+  $s$ & primary sex ratio \\
+  \hline
+\end{tabular}
+
+\bigskip
+
+\input{tmp_C.tex}
+
+
+\section{(b) Secondary sex ratio}
+
+Secondary sex ratio with no sons aborted:
+
+\input{tmp_S_a_zero.tex}
+
+Secondary sex ratio with all aborted:
+
+\input{tmp_S_a_one.tex}
+
+Secondary sex ratio in general:
+
+\input{tmp_S.tex}
+
+Plotted:
+
+\includegraphics[scale=0.5]{tmp_plot_s}
+
+
+
+
+
+
+
 \section{(c) Shaw-Mohler}
 
 The fitness of a mutant in a resident population is:
@@ -18,49 +72,6 @@ To calculate the fitness of a mutant in a resident population, we'll need:
   \item $v\_male(a\_star)$: male reproductive value in resident population
   \item $v\_female(a\_star)$: female reproductive value in resident population
 \end{itemize}
-
-\subsection{(c.5) Fitness}
-
-As a reminder, the fitness formula for a mutant in a resident population is:
-
-\input{tmp_FitnessMutant_1.tex}
-
-Plugging in the four functions above:
-
-\input{tmp_FitnessMutant_2.tex}
-
-The fitness of the resident population is: 
-
-\input{tmp_FitnessResident_1.tex}
-
-Plugging in the four functions (with $a=a\_star$) above, this simplifies to:
-
-\input{tmp_FitnessResident_2.tex}
-
-The relative fitness of the mutant on the resident population:
-
-\input{tmp_RelativeFitness_1.tex}
-
-Filling in both fitness functions:
-
-\input{tmp_RelativeFitness_2.tex}
-
-For an ESS, the fitness of a mutant must always be lower in a resident population. To calculate this, we need the partial derivative of the above fitness function to $a$.
-
-\input{tmp_DeltaFitness_1.tex}
-
-Which is equal to:
-
-\input{tmp_DeltaFitness_2.tex}
-
-Filling in $e_son=10$ and $e_daughter=10$:
-
-\input{tmp_Ess_1.tex}
-
-Which is equal to:
-
-\input{tmp_Ess_2.tex}
-
 
 \subsection{(c.1) Surviving sons}
 
@@ -126,81 +137,53 @@ Filling in $f(a\_star)$:
 
 \input{tmp_ReproValueFemale_3.tex}
 
+\subsection{(c.5) Fitness}
+
+As a reminder, the fitness formula for a mutant in a resident population is:
+
+\input{tmp_FitnessMutant_1.tex}
+
+Plugging in the four functions above:
+
+\input{tmp_FitnessMutant_2.tex}
+
+The fitness of the resident population is: 
+
+\input{tmp_FitnessResident_1.tex}
+
+Plugging in the four functions (with $a=a\_star$) above, this simplifies to:
+
+\input{tmp_FitnessResident_2.tex}
+
+The relative fitness of the mutant on the resident population:
+
+\input{tmp_RelativeFitness_1.tex}
+
+Filling in both fitness functions:
+
+\input{tmp_RelativeFitness_2.tex}
+
+For an ESS, the fitness of a mutant must always be lower in a resident population. To calculate this, we need the partial derivative of the above fitness function to $a$.
+
+\input{tmp_DeltaFitness_1.tex}
+
+Which is equal to:
+
+\input{tmp_DeltaFitness_2.tex}
+
+Filling in $e_son=10$ and $e_daughter=10$:
+
+\input{tmp_Ess_1.tex}
+
+Which is equal to:
+
+\input{tmp_Ess_2.tex}
 
 
 
 
-
-
-
-
-
-
-
-
-\section{(b) Secondary sex ratio}
-
-Secondary sex ratio with no sons aborted:
-
-\input{tmp_S_a_zero.tex}
-
-Secondary sex ratio with all aborted:
-
-\input{tmp_S_a_one.tex}
-
-Secondary sex ratio in general:
-
-\input{tmp_S.tex}
-
-Plotted:
-
-\includegraphics[scale=0.5]{tmp_plot_s}
-
-
-
-
-
-
-
-
-
-
-\section{(a) Clutch size}
-
-Clutch size is dependent on multiple variables:
-
-\bigskip
-
-\begin{tabular}{ | r | l | }
-  \hline
-  Symbol & description \\ 
-  \hline
-  $a$ & fraction of sons aborted \\
-  $C$ & clutch size \\
-  $E$ & total energy invested in clutch \\
-  $e\_daughter$ & energy investment to produce one healthy daughter \\
-  $e\_son$ & energy investment to produce one healthy son \\
-  $s$ & primary sex ratio \\
-  \hline
-\end{tabular}
-
-\bigskip
-
-Clutch size general formula without abortion:
-
-\input{tmp_C_a_zero.tex}
-
-Clutch size general formula with all sons aborted:
-
-\input{tmp_C_a_one.tex}
-
-Clutch general formula, where $a$ denotes the fraction of sons that are aborted:
-
-\input{tmp_C_s_a.tex}
-
-Assuming $s=0.5$, this results in:
-
-\input{tmp_C.tex}
 
 
 \end{document}
+
+

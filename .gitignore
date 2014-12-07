@@ -4,3 +4,4 @@ tmp_*.*
 *.txt~
 *.tex.bak
 *.synctex.gz
+*.lyx~

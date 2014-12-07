@@ -1,0 +1,32 @@
+kill(all);
+
+ESS1(e_a) := (-e_s + e_d + (2 * e_a)) / (e_a - e_s);
+ESS2(e_a) := -(e_s - e_d) / (e_a - e_s);
+e_s:30;
+e_d:10;
+
+plot2d(
+  ESS1(e_a),
+  [e_a,0,12],[y,0,1],
+  [ylabel,"Optimal abortion rate"],
+  [xlabel,"Cost of abortion"],
+  [xtics, 1],
+  [ytics, 0.1],
+  [legend, "ESS"],
+  [color,black],
+  [png_file,"Day5_3_plot.png"],
+  [title,"Optimal abortion rates for e_s=30 and e_d=10"]
+);
+
+plot2d(
+  [ESS1(e_a),ESS2(e_a)],
+  [e_a,0,12],[y,0,1],
+  [ylabel,"Optimal abortion rate"],
+  [xlabel,"Cost of abortion"],
+  [xtics, 1],
+  [ytics, 0.1],
+  [color,black],
+  [legend, "ESS under realistic conditions", "ESS under absurd conditions"],
+  [title,"Optimal abortion rates for e_s=30 and e_d=10"]
+);
+
