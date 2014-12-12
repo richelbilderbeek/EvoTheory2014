@@ -3,9 +3,12 @@ options(error = browser)
 options(echo = FALSE)
 
 Vz <- 0.2
+Vy <- Vz
 Cxy <- 0.1
-theta <- 10 # Male optimum value for viability selection
-omega <- 1 #Distribution of viability value around theta
+theta_male <- 10 # Male optimum value for viability selection
+omega_male <- 1  #Distribution of viability value around theta_male
+theta_female <- 5 # Female optimum value for viability selection
+omega_female <- 1  #Distribution of viability value around theta_female
 
 n_generations <- 100
 initial_mean_z <- 0 #Male trait
@@ -35,14 +38,12 @@ phenotypes_in_time[1,2] <- initial_mean_y
 # Start at t=2, because t=1 denotes the initial values
 for (t in c(2:n_generations))
 {
-	print(t)
 	cur_z <- phenotypes_in_time[t-1,1]
 	cur_y <- phenotypes_in_time[t-1,2]
-  print(cur_z)
-  print(cur_y)
-
-	delta_z <- 0.5 * Vz  * (cur_y - ((cur_z - theta) / (omega * omega)))
-	delta_y <- 0.5 * Cxy * (cur_y - ((cur_z - theta) / (omega * omega)))
+  beta_z <- cur_y - (cur_z - theta_male) / (omega_male * omega_male)
+  beta_y <- -(cur_y - theta_female) / (omega_female * omega_female)
+	delta_z <- 0.5 * ((Vz  * beta_z) + (Vz  * beta_y))
+	delta_y <- 0.5 * ((Cxy * beta_z) + (Vy  * beta_y))
 	
 	next_z <- cur_z + delta_z
 	next_y <- cur_y + delta_y
@@ -57,7 +58,7 @@ plot(
 	xlim=c(1,n_generations),
 	ylim=c(min(phenotypes_in_time),max(phenotypes_in_time)),
 	type="l",col=male_color,
-	main=paste("Average phenotypes in time\nfor Vz=",Vz,", Cxy=",Cxy,", theta=",theta,", omega=",omega),
+	main=paste("Average phenotypes in time\nfor Vz=",Vz,", Cxy=",Cxy,",\ntheta_male=",theta_male,", omega_male=",omega_male,",\ntheta_female=",theta_female,", omega_female=",omega_female),
 	ylab="Trait value",
 	xlab="Time (generations)"
 )
@@ -69,7 +70,8 @@ legend(
 	c("Male trait","Female preference"),col=c(male_color,female_color),pch=c(16,16)
 )
 lines(phenotypes_in_time[2],col=female_color)
-lines(c(1,n_generations),c(theta,theta),lty="dashed")
+lines(c(1,n_generations),c(theta_male,theta_male),lty="dashed",col=male_color)
+lines(c(1,n_generations),c(theta_female,theta_female),lty="dashed",col=female_color)
 
 
 # Phase plot
@@ -84,23 +86,26 @@ plot(
 	xlim=c(min_z,max_z),
 	ylim=c(min_y,max_y),
 	type="n",
-	main=paste("Phenotype change\nfor Vz=",Vz,", Cxy=",Cxy,", theta=",theta,", omega=",omega),
+	main=paste("Phenotype change\nfor Vz=",Vz,", Cxy=",Cxy,",\ntheta_male=",theta_male,", omega_male=",omega_male,",\ntheta_female=",theta_female,", omega_female=",omega_female),
 	ylab="Female preference (y)",
 	xlab="Male trait value (z)"
 )
 equilibrium_line <- function(z) 
 {
-  y <- (z - theta) / (omega * omega)	
+  y <- (z - theta_male) / (omega_male * omega_male)	
 }
-lines(c(min_z,max_z),c(equilibrium_line(min_z),equilibrium_line(max_z)),lty="dashed",col=female_color)
-lines(c(theta,theta),c(min_z,max_z),lty="dashed",col=male_color)
+lines(c(min_z,max_z),c(equilibrium_line(min_z),equilibrium_line(max_z)),lty="dashed",col="black")
+lines(c(theta_male,theta_male),c(min_z,max_z),lty="dashed",col=male_color)
+lines(c(min_z,max_z),c(theta_female,theta_female),lty="dashed",col=female_color)
 
 for (cur_z in seq(min_z,max_z,(max_z-min_z)/res_z))
 {
 	for (cur_y in seq(min_y,max_y,(max_y-min_y)/res_y))
 	{
-		delta_z <- 0.5 * Vz  * (cur_y - ((cur_z - theta) / (omega * omega)))
-		delta_y <- 0.5 * Cxy * (cur_y - ((cur_z - theta) / (omega * omega)))
+	  beta_z <- cur_y - (cur_z - theta_male) / (omega_male * omega_male)
+	  beta_y <- -(cur_y - theta_female) / (omega_female * omega_female)
+		delta_z <- 0.5 * ((Vz  * beta_z) + (Vz  * beta_y))
+		delta_y <- 0.5 * ((Cxy * beta_z) + (Vy  * beta_y))
     arrows(
     	cur_z,
     	cur_y,

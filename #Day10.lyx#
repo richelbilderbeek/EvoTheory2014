@@ -64,7 +64,7 @@ Multivariate Selection exercise
 \end_layout
 
 \begin_layout Author
-Richèl Bilderbeek
+Richel Bilderbeek
 \end_layout
 
 \begin_layout Subsubsection*
@@ -79,30 +79,7 @@ Starting with equation [9] from Lande:
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{S}{\sigma^{2}}=\beta=\frac{\frac{1}{\alpha}\bar{y}-\left[1+\frac{\epsilon}{\alpha}\right]\bar{z}+\theta}{\omega^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Filling in 
-\begin_inset Formula $\epsilon=0$
-\end_inset
-
- and 
-\begin_inset Formula $\alpha=\frac{1}{\omega^{2}}$
-\end_inset
-
- yields the equation on the document:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\beta=\frac{\omega^{2}\bar{y}-\bar{z}+\theta}{\omega^{2}}=\frac{\omega^{2}\bar{y}-\bar{z}+\theta}{\omega^{2}}=\frac{\omega^{2}\bar{y}}{\omega^{2}}-\frac{\bar{z}+\theta}{\omega^{2}}=\bar{y}-\frac{\bar{z}+\theta}{\omega^{2}}=\beta_{z}
+\frac{S}{\sigma^{2}}=\\
 \]
 
 \end_inset
@@ -158,7 +135,7 @@ c) Which part of the selection gradient
 \end_layout
 
 \begin_layout Standard
-The effect of sexual selection is (simply) 
+The effect of sexual selection is only 
 \begin_inset Formula $\bar{y}$
 \end_inset
 
@@ -256,98 +233,6 @@ I would expect
 
 , because (1) the male trait is selected on directly (2) selection decreases
  variance.
-\end_layout
-
-\begin_layout Standard
-I expect 
-\begin_inset Formula $C_{xy}$
-\end_inset
-
- to be positive, as I expect it is to be beneficial for a mother to create
- (1) sons with the preferred trait (2) daughters with preference for the
- current population its trait.
-\end_layout
-
-\begin_layout Subsubsection*
-f) Extend the model by assuming that the mating preference is subject to
- weak stabilizing natural selection.
- How does direct selection acting on the preference affect the outcome of
- evolution? Can costly preferences be maintained in a population at equilibrium?
-\end_layout
-
-\begin_layout Standard
-I extended the model to this:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\beta_{z}=\bar{y}-\frac{\bar{z}+\theta_{\male}}{\omega_{\male}^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\beta_{y}=-\frac{\bar{y}+\theta_{\female}}{\omega_{\female}^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\left(\begin{array}{c}
-\Delta\bar{z}\\
-\Delta\bar{y}
-\end{array}\right)=\frac{1}{2}\left(\begin{array}{cc}
-V_{z} & C_{xy}\\
-C_{xy} & V_{y}
-\end{array}\right).\left(\begin{array}{c}
-\beta_{z}\\
-\beta_{y}
-\end{array}\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Resulting in these plots:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename Day10_f_in_time.svg
-	scale 75
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename Day10_f.svg
-	scale 75
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-It shows that the females will evolve to the preference with maximum viability.
- 
 \end_layout
 
 \end_body
