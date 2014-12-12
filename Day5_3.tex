@@ -1,189 +1,205 @@
-\documentclass[11]{article}
+%% LyX 2.0.6 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
 \usepackage{graphicx}
-
+\usepackage{babel}
 \begin{document}
 
+\title{Exercise 5-3}
+
+
+\author{Richel Bilderbeek}
+
+\maketitle
+
+\subsubsection*{a) Clutch size}
+
+Clutch size for no abortion:
+
+\[
+C(a=0)=\frac{E}{\frac{1}{2}e_{s}+\frac{1}{2}e_{d}}
+\]
+
+
+Clutch size for full abortion:
+
+\[
+C(a=1)=\frac{E}{\frac{1}{2}e_{a}+\frac{1}{2}e_{d}}
+\]
+
+
+Clutch size in general:
+
+\[
+C(a)=\frac{E}{\frac{1}{2}(a.e_{a}+(1-a)e_{s})+\frac{1}{2}e_{d}}
+\]
+
+
+\[
+C(a)=\frac{2E}{a.e_{a}+(1-a)e_{s}+e_{d}}
+\]
 
 
 
+\subsubsection*{b) Secondary sex ratio}
+
+Secondary sex ratio for no abortion:
+
+\[
+S(a=0)=\frac{sons}{sons+daughters}=\frac{\frac{1}{2}}{\frac{1}{2}+\frac{1}{2}}=\frac{1}{2}
+\]
 
 
+Secondary sex ratio for full abortion:
 
+\[
+S(a=1)=\frac{sons}{sons+daughters}=\frac{0}{0+\frac{1}{2}}=0
+\]
 
-\section{(a) Clutch size}
-
-Clutch size is dependent on multiple variables:
-
-\bigskip
-
-\begin{tabular}{ | r | l | }
-  \hline
-  Symbol & description \\ 
-  \hline
-  $a$ & fraction of sons aborted \\
-  $C$ & clutch size \\
-  $E$ & total energy invested in clutch \\
-  $e\_daughter$ & energy investment to produce one healthy daughter \\
-  $e\_son$ & energy investment to produce one healthy son \\
-  $s$ & primary sex ratio \\
-  \hline
-\end{tabular}
-
-\bigskip
-
-\input{tmp_C.tex}
-
-
-\section{(b) Secondary sex ratio}
-
-Secondary sex ratio with no sons aborted:
-
-\input{tmp_S_a_zero.tex}
-
-Secondary sex ratio with all aborted:
-
-\input{tmp_S_a_one.tex}
 
 Secondary sex ratio in general:
 
-\input{tmp_S.tex}
+\begin{equation}
+S(a)=\frac{sons}{sons+daughters}=\frac{\frac{1}{2}-\frac{1}{2}a}{\frac{1}{2}-\frac{1}{2}a+\frac{1}{2}}=\frac{1-a}{2-a}\label{eq:S}
+\end{equation}
 
-Plotted:
 
-\includegraphics[scale=0.5]{tmp_plot_s}
 
+\subsubsection*{c) Calculate a mutant its fitness}
 
+Shaw-Mohler equation, with $x$ replaced by $a$:
 
+\begin{equation}
+W(a,a^{*})=\frac{1}{2}\left[\frac{m(a)}{m(a^{*})}+\frac{f(a)}{f(a^{*})}\right]\label{eq:ShawMohler}
+\end{equation}
 
 
+To solve this, we need $m(a)$ and $f(a)$:
 
+\[
+m(a)=C(a)s(x)P_{s}(a)=C(a)\frac{1}{2}(1-a)=C(a)\left[\frac{1}{2}-\frac{1}{2}a\right]
+\]
 
-\section{(c) Shaw-Mohler}
 
-The fitness of a mutant in a resident population is:
+\[
+f(a)=C(a)s(x)P_{d}(a)=C(a)\frac{1}{2}.1=\frac{1}{2}C(a)
+\]
 
-\input{tmp_FitnessMutant_1.tex}
 
-To calculate the fitness of a mutant in a resident population, we'll need:
+Filling this in:
 
-\begin{itemize}
-  \item $m(a)$: number of surviving sons
-  \item $f(a)$: number of surviving daughters
-  \item $v\_male(a\_star)$: male reproductive value in resident population
-  \item $v\_female(a\_star)$: female reproductive value in resident population
-\end{itemize}
+\begin{equation}
+W(a,a^{*})=\frac{1}{2}\left[\frac{C(a)[\frac{1}{2}-\frac{1}{2}a]}{C(a^{*})[\frac{1}{2}-\frac{1}{2}a^{*}]}+\frac{\frac{1}{2}C(a)}{\frac{1}{2}C(a^{*})}\right]=\frac{1}{2}.\frac{C(a)}{C(a^{*})}\left[\frac{1-a}{1-a^{*}}+1\right]\label{eq:FitnessMutant}
+\end{equation}
 
-\subsection{(c.1) Surviving sons}
 
-General formula of surviving sons:
 
-\input{tmp_SurvivingSons_1.tex}
+\subsubsection*{d) For $e_{a}<e_{d}$, Is the equal allocation principle still valid?}
 
-Plug in $C(s,a)$:
+This equation should work, for the equal allocation principle to be
+valid:
 
-\input{tmp_SurvivingSons_2.tex}
+\[
+\frac{s^{*}}{1-s^{*}}=\frac{e_{d}}{e_{s}}
+\]
 
-Set $s=1/2$:
 
-\input{tmp_SurvivingSons_3.tex}
+Too bad, this does not take into account the cost of abortion. So,
+using equation \ref{eq:S} to determine the abortion strategy:
 
-Also plug in $S(a)$:
+\[
+\frac{s^{*}}{1-s^{*}}=\frac{\frac{1-a^{*}}{2-a^{*}}}{1-\frac{1-a^{*}}{2-a^{*}}}=1-a^{*}
+\]
 
-\input{tmp_SurvivingSons_4.tex}
 
-\subsection{(c.2) Surviving daughters}
+In section (g) we calculate $a^{*}$, so we can plug it in:
 
-General formula of surviving daughters:
+\begin{equation}
+\frac{s^{*}}{1-s^{*}}=1-a^{*}=1-\left[\frac{-e_{s}+e_{d}+2.e_{a}}{e_{a}-e_{s}}\right]=\frac{e_{d}+e_{a}}{e_{s}-e_{a}}\label{eq:EAP_with_abortion}
+\end{equation}
 
-\input{tmp_SurvivingDaughters_1.tex}
 
-Plug in $C(s,a)$:
+Now we can see that abortion is an investment at the expense of sons
+(see the denominator) at the gain of daughters (numerator). Taking
+into account abortion, the equal allocation principle is still unscathed. 
 
-\input{tmp_SurvivingDaughters_2.tex}
 
-Set $s=1/2$:
+\subsubsection*{e) For $e_{a}=e_{d}$, is the equal allocation principle still valid?}
 
-\input{tmp_SurvivingDaughters_3.tex}
+From equation \ref{eq:EAP_with_abortion} we can see that abortion
+is invested in the creation of daughters. If this investment (the
+expense of a son) equals its return (a daughter), nothing is gained
+by aborting sons.
 
-Also plug in $S(a)$:
 
-\input{tmp_SurvivingDaughters_4.tex}
+\subsubsection*{f) Plot of a graph}
 
-\subsection{(c.3) Male reproductive value}
+Using equation \ref{eq:a_star} (which is derived below).
 
-General formula for male reproductive value:
+\includegraphics[scale=0.5]{Day5_3_plot}
 
-\input{tmp_ReproValueMale_1.tex}
 
-Filling in $alpha=1/2$:
+\subsubsection*{g) Derive $a^{*}$}
 
-\input{tmp_ReproValueMale_2.tex}
+First equation \ref{eq:FitnessMutant} needs to be reworked before
+taking the partial differential of $W(a,a^{*})$ to $a$:
 
-Filling in $m(a\_star)$:
+\[
+W(a,a^{*})=\frac{1}{2}.\frac{C(a)}{C(a^{*})}\left[\frac{1-a}{1-a^{*}}+1\right]=\left[\frac{E}{1-a^{*}C(a^{*})}\right]\left[\frac{2-a-a^{*}}{a.e_{a}+(1-a)e_{s}+e_{d}}\right]
+\]
 
-\input{tmp_ReproValueMale_3.tex}
 
-\subsection{(c.4) Female reproductive value}
+Because the first term is indepent of $a$, it does not take part
+in the partial differential:
 
-General formula for female reproductive value:
+\[
+k=\left[\frac{E}{1-a^{*}C(a^{*})}\right]
+\]
 
-\input{tmp_ReproValueFemale_1.tex}
 
-Filling in $alpha=1/2$:
+Extracting $k$ and differentiating with the quotient rule:
 
-\input{tmp_ReproValueFemale_2.tex}
+\[
+\left[\frac{f}{g}\right]^{'}=\frac{f'g-f.g'}{(g)^{2}}=\frac{dW}{da}=\frac{e_{s}-e_{d}-2.e_{a}+a^{*}.e_{a}-a^{*}.e_{s}}{(g)^{2}}
+\]
 
-Filling in $f(a\_star)$:
 
-\input{tmp_ReproValueFemale_3.tex}
+To find the maximum $k\frac{dW}{da}=0$ must be solved, of which either
+$k$ or $\frac{dW}{da}$is zero:
 
-\subsection{(c.5) Fitness}
+\[
+k=\left[\frac{E}{1-a^{*}C(a^{*})}\right]=0
+\]
 
-As a reminder, the fitness formula for a mutant in a resident population is:
 
-\input{tmp_FitnessMutant_1.tex}
+\begin{equation}
+a^{*}=\frac{-e_{s}-e_{d}}{e_{a}-e_{s}}\label{eq:a_star_nonsense}
+\end{equation}
 
-Plugging in the four functions above:
 
-\input{tmp_FitnessMutant_2.tex}
+\[
+\frac{dW}{da}=0
+\]
 
-The fitness of the resident population is: 
 
-\input{tmp_FitnessResident_1.tex}
+\[
+e_{s}-e_{d}-2.e_{a}+a^{*}.e_{a}-a^{*}.e_{s}=0
+\]
 
-Plugging in the four functions (with $a=a\_star$) above, this simplifies to:
 
-\input{tmp_FitnessResident_2.tex}
+\begin{equation}
+a^{*}=\frac{-e_{s}+e_{d}+2.e_{a}}{e_{a}-e_{s}}\label{eq:a_star}
+\end{equation}
 
-The relative fitness of the mutant on the resident population:
 
-\input{tmp_RelativeFitness_1.tex}
+Note that equation \ref{eq:a_star_nonsense} is mathematically valid,
+but only works when some costs are negative.
 
-Filling in both fitness functions:
 
-\input{tmp_RelativeFitness_2.tex}
+\subsubsection*{Acknowledgements}
 
-For an ESS, the fitness of a mutant must always be lower in a resident population. To calculate this, we need the partial derivative of the above fitness function to $a$.
-
-\input{tmp_DeltaFitness_1.tex}
-
-Which is equal to:
-
-\input{tmp_DeltaFitness_2.tex}
-
-Filling in $e_son=10$ and $e_daughter=10$:
-
-\input{tmp_Ess_1.tex}
-
-Which is equal to:
-
-\input{tmp_Ess_2.tex}
-
-
-
-
-
-
+The author would like to thank Anna Depetris and Francesca Sozzi for
+their collaboration.
 \end{document}
-
-

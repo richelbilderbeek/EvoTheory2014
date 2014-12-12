@@ -5,3 +5,4 @@ tmp_*.*
 *.tex.bak
 *.synctex.gz
 *.lyx~
+.RHistory
