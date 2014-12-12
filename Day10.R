@@ -2,13 +2,14 @@ rm(list = ls())
 options(error = browser)
 options(echo = FALSE)
 
-Vz <- 0.1
-Cxy <-0.01
-n_generations <- 100
-initial_mean_z <- 1
-initial_mean_y <- 1
+Vz <- 0.2
+Cxy <- -0.1
 theta <- 10 # Male optimum value for viability selection
 omega <- 1 #Distribution of viability value around theta
+
+n_generations <- 100
+initial_mean_z <- 1 #Male trait
+initial_mean_y <- 1 #Female preference
 
 male_color <- "red"
 female_color <- "blue"
@@ -30,6 +31,7 @@ rownames(phenotypes_in_time) <- seq(1:n_generations)
 phenotypes_in_time[1,1] <- initial_mean_z
 phenotypes_in_time[1,2] <- initial_mean_y
 
+# Plot traits in time
 # Start at t=2, because t=1 denotes the initial values
 for (t in c(2:n_generations))
 {
@@ -87,7 +89,13 @@ plot(
 	ylab="Female preference (y)",
 	xlab="Male trait value (z)"
 )
+equilibrium_line <- function(z) 
+{
+  y <- (z - theta) / (omega * omega)	
+}
 
+lines(c(min_z,max_z),c(equilibrium_line(min_z),equilibrium_line(max_z)),lty="dashed")
+	
 for (cur_z in seq(min_z,max_z,(max_z-min_z)/res_z))
 {
 	for (cur_y in seq(min_y,max_y,(max_y-min_y)/res_y))
@@ -97,21 +105,3 @@ for (cur_z in seq(min_z,max_z,(max_z-min_z)/res_z))
     arrows(cur_z,cur_y,cur_z + (0.5 * delta_z),cur_y + (0.5*delta_y),length=0.05)
 	}
 }
-
-# plot(
-# 	as.matrix(phenotypes_in_time),
-# 	xlim=c(min(phenotypes_in_time[1]),max(phenotypes_in_time[1])),
-# 	ylim=c(min(phenotypes_in_time[2]),max(phenotypes_in_time[1])),
-# 	type="l",col=c(male_color,female_color),
-# 	main="Phenotypes run",
-# 	ylab="Female preference (y)",
-# 	xlab="Male trait value (z)"
-# )
-# legend_x <- max(phenotypes_in_time[1])
-# legend_y <- max(phenotypes_in_time[2])
-# legend(
-# 	legend_x,
-# 	legend_y,
-# 	c("Male trait","Female preference"),col=c(male_color,female_color),pch=c(16,16)
-# )
-	
