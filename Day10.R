@@ -3,7 +3,7 @@ options(error = browser)
 options(echo = FALSE)
 
 Vz <- 0.1
-Cxy <- 0.01
+Cxy <-0.01
 n_generations <- 100
 initial_mean_z <- 1
 initial_mean_y <- 1
@@ -70,13 +70,13 @@ lines(phenotypes_in_time[2],col=female_color)
 lines(c(1,n_generations),c(theta,theta),lty="dashed")
 
 
-# Start at t=2, because t=1 denotes the initial values
+# Phase plot
 min_z <- -20
 max_z <-  20
-res_z <- 20
+res_z <- 20 #Resolution: number of arrows in horizontal direction
 min_y <- -20
 max_y <-  20
-res_y <- 20
+res_y <- 20 #Resolution: number of arrows in vertical direction
 
 plot(
 	"",
@@ -94,10 +94,7 @@ for (cur_z in seq(min_z,max_z,(max_z-min_z)/res_z))
 	{
 		delta_z <- 0.5 * Vz  * (cur_y - ((cur_z - theta) / (omega * omega)))
 		delta_y <- 0.5 * Cxy * (cur_y - ((cur_z - theta) / (omega * omega)))
-		
-		next_z <- cur_z + delta_z
-		next_y <- cur_y + delta_y
-    arrows(cur_z,cur_y,next_z,next_y)
+    arrows(cur_z,cur_y,cur_z + (0.5 * delta_z),cur_y + (0.5*delta_y),length=0.05)
 	}
 }
 
