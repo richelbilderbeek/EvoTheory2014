@@ -10,6 +10,8 @@ omega_male <- 1  #Distribution of viability value around theta_male
 theta_female <- 5 # Female optimum value for viability selection
 omega_female <- 1  #Distribution of viability value around theta_female
 
+
+
 n_generations <- 100
 initial_mean_z <- 0 #Male trait
 initial_mean_y <- 0 #Female preference
@@ -58,7 +60,7 @@ plot(
 	xlim=c(1,n_generations),
 	ylim=c(min(phenotypes_in_time),max(phenotypes_in_time)),
 	type="l",col=male_color,
-	main=paste("Average phenotypes in time\nfor Vz=",Vz,", Cxy=",Cxy,",\ntheta_male=",theta_male,", omega_male=",omega_male,",\ntheta_female=",theta_female,", omega_female=",omega_female),
+	main=paste("Average phenotypes in time for Vz=",Vz,", Cxy=",Cxy,",theta_male=",theta_male,", omega_male=",omega_male,",theta_female=",theta_female,", omega_female=",omega_female),
 	ylab="Trait value",
 	xlab="Time (generations)"
 )
@@ -86,7 +88,7 @@ plot(
 	xlim=c(min_z,max_z),
 	ylim=c(min_y,max_y),
 	type="n",
-	main=paste("Phenotype change\nfor Vz=",Vz,", Cxy=",Cxy,",\ntheta_male=",theta_male,", omega_male=",omega_male,",\ntheta_female=",theta_female,", omega_female=",omega_female),
+	main=paste("Phenotype change for Vz=",Vz,", Cxy=",Cxy,", theta_male=",theta_male,", omega_male=",omega_male,", theta_female=",theta_female,", omega_female=",omega_female),
 	ylab="Female preference (y)",
 	xlab="Male trait value (z)"
 )

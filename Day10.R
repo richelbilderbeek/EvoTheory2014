@@ -3,9 +3,13 @@ options(error = browser)
 options(echo = FALSE)
 
 Vz <- 0.2
-Cxy <- 0.1
+Cxy <- 0.5
 theta <- 10 # Male optimum value for viability selection
 omega <- 1 #Distribution of viability value around theta
+
+lambda <- Cxy - (Vz / 2 *omega*omega)
+lambda
+if (lambda > -2 && lambda < 0) { print("Stable") } else { print("Instable") }
 
 n_generations <- 100
 initial_mean_z <- 0 #Male trait

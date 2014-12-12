@@ -68,7 +68,7 @@ Richèl Bilderbeek
 \end_layout
 
 \begin_layout Subsubsection*
-a) show that the model defined above corresponds to what Lande calls the
+a) Show that the model defined above corresponds to what Lande calls the
  ‘psychophysical’ model of mating preferences
 \end_layout
 
@@ -116,15 +116,34 @@ b) Give a biological interpretation for the parameters θ and ω , and explain
 \end_layout
 
 \begin_layout Standard
-θ: male trait value with highest viability, the optimal trait value without
- sexual selection
+\begin_inset Formula $θ$
+\end_inset
+
+: male trait value with highest viability, the optimal trait value without
+ sexual selection.
+ For example, the most optimal tail length.
 \end_layout
 
 \begin_layout Standard
-ω: range of male phenotypes around the optimum for high viability, the strength
+\begin_inset Formula $ω$
+\end_inset
+
+: range of male phenotypes around the optimum for high viability, the strength
  of the effect on viability when a trait deviates from the optimum.
- If ω is infinite, all trait values result in the same (optimal) viability,
- if ω is close to zero, only males close the θ have a high viability
+ If 
+\begin_inset Formula $ω$
+\end_inset
+
+ is infinite, all trait values result in the same (optimal) viability, if
+ 
+\begin_inset Formula $ω$
+\end_inset
+
+ is close to zero, only males close the 
+\begin_inset Formula $θ$
+\end_inset
+
+ have a high viability.
 \end_layout
 
 \begin_layout Standard
@@ -133,8 +152,8 @@ b) Give a biological interpretation for the parameters θ and ω , and explain
 
 : the effect of allele change for the male trait happens within males only,
  that is, in half of the sexes.
- Also, the alleles for the female preference might be pushed in a certain
- direction only within females
+ Also, the alleles for the female preference are only actively changed within
+ females
 \end_layout
 
 \begin_layout Subsubsection*
@@ -240,13 +259,55 @@ Sexual selection can take male trait expression to extremes, if the covariance
  in the female is larger than the genetic additive variance in males.
  In other words: the males have to be able to keep up with the female preference
 s.
+ Stability is calculated by Lande (equation 12), and it is stable if the
+ next equation is true:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+-2<C_{xy}-\frac{\left[\alpha+\epsilon\right]V_{z}}{2\alpha\omega^{2}}<0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Again, filling in 
+\begin_inset Formula $\epsilon=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha=\frac{1}{\omega^{2}}$
+\end_inset
+
+ yields the following:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+-2<C_{xy}-\frac{V_{z}}{2\omega^{2}}<0
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection*
-(e) Is there a reason to expect that the additive genetic covariance C xy
+(e) Is there a reason to expect that the additive genetic covariance 
+\begin_inset Formula $C_{xy}$
+\end_inset
+
  is large enough to destabilize the evolutionary dynamics of trait and preferenc
-e? Would you expect Cxy to be positive or negative in a population with
- sexual selection?
+e? Would you expect 
+\begin_inset Formula $C_{xy}$
+\end_inset
+
+ to be positive or negative in a population with sexual selection?
 \end_layout
 
 \begin_layout Standard
@@ -327,8 +388,9 @@ Resulting in these plots:
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename Day10_f_in_time.svg
-	scale 75
+	filename Day10_f_in_time.png
+	lyxscale 40
+	scale 40
 
 \end_inset
 
@@ -337,8 +399,9 @@ Resulting in these plots:
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename Day10_f.svg
-	scale 75
+	filename Day10_f.png
+	lyxscale 40
+	scale 40
 
 \end_inset
 
@@ -347,7 +410,9 @@ Resulting in these plots:
 
 \begin_layout Standard
 It shows that the females will evolve to the preference with maximum viability.
- 
+ Additionaly, a female being choosy, does not give her extra costs beyond
+ this cost of being choosy itself: she does not have to make a trade-off
+ between viability and preference.
 \end_layout
 
 \end_body
