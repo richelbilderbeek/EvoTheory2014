@@ -2,13 +2,13 @@ rm(list = ls())
 options(error = browser)
 options(echo = FALSE)
 
-Vz <- 0.5
-Cxy <- 0.05
+Vz <- 0.1
+Cxy <- 0.01
 n_generations <- 100
-initial_mean_z <- 0.0
-initial_mean_y <- 0.0
+initial_mean_z <- 1
+initial_mean_y <- 1
 theta <- 10 # Male optimum value for viability selection
-omega <- 1.0 #Distribution of viability value around theta
+omega <- 1 #Distribution of viability value around theta
 
 male_color <- "red"
 female_color <- "blue"
@@ -29,7 +29,6 @@ colnames(phenotypes_in_time) <- rownames(phenotypes)
 rownames(phenotypes_in_time) <- seq(1:n_generations)
 phenotypes_in_time[1,1] <- initial_mean_z
 phenotypes_in_time[1,2] <- initial_mean_y
-
 
 # Start at t=2, because t=1 denotes the initial values
 for (t in c(2:n_generations))
@@ -68,3 +67,54 @@ legend(
 	c("Male trait","Female preference"),col=c(male_color,female_color),pch=c(16,16)
 )
 lines(phenotypes_in_time[2],col=female_color)
+lines(c(1,n_generations),c(theta,theta),lty="dashed")
+
+
+# Start at t=2, because t=1 denotes the initial values
+min_z <- -20
+max_z <-  20
+res_z <- 20
+min_y <- -20
+max_y <-  20
+res_y <- 20
+
+plot(
+	"",
+	xlim=c(min_z,max_z),
+	ylim=c(min_y,max_y),
+	type="n",
+	main="Phenotype change",
+	ylab="Female preference (y)",
+	xlab="Male trait value (z)"
+)
+
+for (cur_z in seq(min_z,max_z,(max_z-min_z)/res_z))
+{
+	for (cur_y in seq(min_y,max_y,(max_y-min_y)/res_y))
+	{
+		delta_z <- 0.5 * Vz  * (cur_y - ((cur_z - theta) / (omega * omega)))
+		delta_y <- 0.5 * Cxy * (cur_y - ((cur_z - theta) / (omega * omega)))
+		
+		next_z <- cur_z + delta_z
+		next_y <- cur_y + delta_y
+    arrows(cur_z,cur_y,next_z,next_y)
+	}
+}
+
+# plot(
+# 	as.matrix(phenotypes_in_time),
+# 	xlim=c(min(phenotypes_in_time[1]),max(phenotypes_in_time[1])),
+# 	ylim=c(min(phenotypes_in_time[2]),max(phenotypes_in_time[1])),
+# 	type="l",col=c(male_color,female_color),
+# 	main="Phenotypes run",
+# 	ylab="Female preference (y)",
+# 	xlab="Male trait value (z)"
+# )
+# legend_x <- max(phenotypes_in_time[1])
+# legend_y <- max(phenotypes_in_time[2])
+# legend(
+# 	legend_x,
+# 	legend_y,
+# 	c("Male trait","Female preference"),col=c(male_color,female_color),pch=c(16,16)
+# )
+	
