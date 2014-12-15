@@ -6,3 +6,4 @@ tmp_*.*
 *.synctex.gz
 *.lyx~
 .RHistory
+*.lyx#
