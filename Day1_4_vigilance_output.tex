@@ -1,0 +1,51 @@
+\documentclass{article}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\title{Day 1, exercise 4: Vigilance}
+\author{Richel Bilderbeek}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+$v$: fraction of foraging time invested in being watchful.\\
+$S$: survival probability.
+$$S\left(v\right)=v$$
+$F$: foraging efficiency.
+$$F\left(v\right)=1.0-v^2$$
+$W(v)$: fitness.
+$W(v) = S(v) + F(v)$
+$$W\left(v\right)=-v^2+v+1.0$$
+Plotted this looks like:\\\\
+\fbox{\includegraphics[scale=0.5]{/home/richel/GitHubs/Maxima/Day1_4_vigilance_output.pdf}}\\\\
+To calculate the maximum or minimum, set the derivate to zero and solve it:
+$${{d}\over{d\,v}}\,W\left(v\right)=1-2\,v=0$$
+$$v={{1}\over{2}}$$
+Thus, the optimal vigilance level $v$ equals:$${{1}\over{2}}$$
+
+This optimal vigilance level results in a fitness of:$$W\left({{1}\over{2}}\right)=1.25$$
+
+To find out if it is a fitness minimum or maximum,
+calculate the second derivative
+and find out its value at the minimum or maximum:
+$${{d^2}\over{d\,v^2}}\,W\left(v\right)=-2$$
+Thus, it is a maximum.
+
+\appendix
+
+\section{Script file}
+
+\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{Day1_4_vigilance.sh}
+
+\section{Maxima file}
+
+\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{Day1_4_vigilance.txt}
+
+\section{\LaTeX~file}
+
+\lstinputlisting[language=tex,showstringspaces=false,breaklines=true,frame=single]{Day1_4_vigilance_output.tex}
+
+\end{document}

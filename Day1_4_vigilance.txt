@@ -1,0 +1,116 @@
+/* Maxima batch file */
+
+/* Load libraries */
+load("stringproc")$
+
+/* Input filename */
+bash_filename:"Day1_4_vigilance.sh"$
+maxima_filename:"Day1_4_vigilance.txt"$ /* this file */
+
+/* Output filenames */
+tex_filename:"Day1_4_vigilance_output.tex"$
+pdf_filename:"/home/richel/GitHubs/Maxima/Day1_4_vigilance_output.pdf"$
+
+/* Write results to TeX file */
+stream: openw(tex_filename)$
+printf(stream,"\\documentclass{article}~%")$
+printf(stream,"~%")$
+printf(stream,"\\usepackage{listings}~%")$
+printf(stream,"\\usepackage{graphicx}~%")$
+printf(stream,"~%")$
+printf(stream,"\\title{Day 1, exercise 4: Vigilance}~%")$
+printf(stream,"\\author{Richel Bilderbeek}~%")$
+printf(stream,"\\date{\\today}~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{document}~%")$
+printf(stream,"~%")$
+printf(stream,"\\maketitle~%")$
+printf(stream,"~%")$
+
+printf(stream,"$v$: fraction of foraging time invested in being watchful.\\\\~%")$
+printf(stream,"$S$: survival probability.~%")$
+
+Survival(v) := S(v) = v;
+
+printf(stream,tex(Survival(v),false))$ 
+printf(stream,"$F$: foraging efficiency.~%")$
+
+Foraging(v) := F(v) = 1.0 - (v^2);
+
+printf(stream,tex(Foraging(v),false))$ 
+printf(stream,"$W(v)$: fitness.~%")$
+printf(stream,"$W(v) = S(v) + F(v)$~%")$
+
+Fitness(v) := W(v) = ''(rhs(Survival(v)) + rhs(Foraging(v)));
+
+printf(stream,tex(Fitness(v),false))$ 
+printf(stream,"Plotted this looks like:\\\\\\\\~%")$
+
+plot2d(
+  rhs(Fitness(v)),[v,0.0,1.0],
+  [title,"Fitness"],
+  [xlabel,"v: fraction of foraging time being vigilant"],
+  [ylabel,"W(v): fitness"],
+  [color,black],
+  [pdf_file,pdf_filename]
+);
+
+printf(stream,"\\fbox{\\includegraphics[scale=0.5]{")$
+printf(stream,pdf_filename)$
+printf(stream,"}}\\\\\\\\~%")$
+
+printf(stream,"To calculate the maximum or minimum, set the derivate to zero and solve it:~%")$
+
+FitnessDeriv(v) := diff(W(v),v) = ''(diff(rhs(Fitness(v)),v));
+
+maximum:solve(rhs(FitnessDeriv(v))=0)[1];
+
+printf(stream,tex(FitnessDeriv(v)=0,false))$ 
+printf(stream,tex(maximum,false))$ 
+
+printf(stream,"Thus, the optimal vigilance level $v$ equals:")$
+printf(stream,tex(rhs(maximum),false))$ 
+printf(stream,"~%")$
+
+printf(stream,"This optimal vigilance level results in a fitness of:")$
+printf(stream,tex(Fitness(rhs(maximum)),false))$ 
+printf(stream,"~%")$
+
+printf(stream,"To find out if it is a fitness minimum or maximum,~%")$
+printf(stream,"calculate the second derivative~%")$
+printf(stream,"and find out its value at the minimum or maximum:~%")$
+
+FitnessDerivDeriv(v) := diff(W(v),v,2) = ''(diff(rhs(FitnessDeriv(v)),v));
+
+printf(stream,tex(FitnessDerivDeriv(v),false))$ 
+
+if rhs(FitnessDerivDeriv(v))<0
+then 
+  printf(stream,"Thus, it is a maximum.~%")
+else 
+  printf(stream,"Thus, it is a minimum.~%")
+;
+
+printf(stream,"~%")$
+printf(stream,"\\appendix~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Script file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,bash_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Maxima file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,maxima_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{\\LaTeX~~file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=tex,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,tex_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\end{document}~%")$
+close(stream)$
