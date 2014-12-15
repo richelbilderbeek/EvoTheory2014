@@ -9,3 +9,5 @@ fi
 
 maxima -b $maxima_input_file
 pdflatex $tex_output_file
+#Do this twice, so pdflatex can fill in the references
+pdflatex $tex_output_file

@@ -11,16 +11,39 @@
 
 \maketitle
 
-$v$: fraction of foraging time invested in being watchful.\\
-$S$: survival probability.
+\begin{abstract}
+This article is created within the CAS program Maxima
+and shows how to do algebraic manipuations and graphical plotting.
+The output is in \LaTeX~ format.
+\end{abstract}
+\section{Exercise}
+First, we write down all equations
+(for definitions see table \ref{table:table_definition} on page \pageref{table:table_definition}).
+\begin{table}[here]
+  \centering
+  \begin{tabular}{ | r | l | }
+    \hline
+    symbol & description \\
+    \hline
+    $v$ & fraction of foraging time invested in being watchful \\
+    $S(v)$ & survival probability \\
+    $F(v)$ & foraging efficiency \\
+    $W(v)$ & fitness \\
+    \hline
+  \end{tabular}
+  \caption{Definitions}
+  \label{table:table_definition}
+\end{table}
 $$S\left(v\right)=v$$
-$F$: foraging efficiency.
 $$F\left(v\right)=1.0-v^2$$
-$W(v)$: fitness.
-$W(v) = S(v) + F(v)$
 $$W\left(v\right)=-v^2+v+1.0$$
-Plotted this looks like:\\\\
-\fbox{\includegraphics[scale=0.5]{/home/richel/GitHubs/Maxima/Day1_4_vigilance_output.pdf}}\\\\
+The fitness function plotted is plotted in figure 
+\ref{figure:figure_fitness} on page \pageref{figure:figure_fitness}.\\
+\begin{figure}[here]
+\includegraphics[width=1\textwidth]{/home/richel/GitHubs/Maxima/Day1_4_vigilance_output.pdf}\\\\
+  \caption{Fitness function}
+  \label{figure:figure_fitness}
+\end{figure}
 To calculate the maximum or minimum, set the derivate to zero and solve it:
 $${{d}\over{d\,v}}\,W\left(v\right)=1-2\,v=0$$
 $$v={{1}\over{2}}$$
