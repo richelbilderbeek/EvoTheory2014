@@ -64,6 +64,22 @@ GenotypeToPhenotype3 <- function(genotype)
 	assert("Unknown genotype, should be 'AA', 'Aa' or 'aa'",1==2)
 }
 
+GetGenotypeToPhenotypeFunction <- function(genotype_to_phenotype_function)
+{
+  if (genotype_to_phenotype_function == 1) { return(GenotypeToPhenotype1) }
+  if (genotype_to_phenotype_function == 2) { return(GenotypeToPhenotype2) }
+  if (genotype_to_phenotype_function == 3) { return(GenotypeToPhenotype3) }
+	assert("Unknown genotype_to_phenotype_function, should be '1', '2' or '3'",1==2)
+}
+
+GetGenotypeToPhenotypeFunctionDescription <- function(genotype_to_phenotype_function)
+{
+  if (genotype_to_phenotype_function == 1) { return("AA: O, Aa: Y, aa: B") }
+  if (genotype_to_phenotype_function == 2) { return("AA: B, Aa: O, aa: Y") }
+  if (genotype_to_phenotype_function == 3) { return("AA: Y, Aa: B, aa: O") }
+	assert("Unknown genotype_to_phenotype_function, should be '1', '2' or '3'",1==2)
+}
+
 PhenotypeToPlotColor <- function(phenotype)
 {
 	if (phenotype == "Y") return ("yellow")
@@ -74,8 +90,11 @@ PhenotypeToPlotColor <- function(phenotype)
 
 
 
-RunSimulation <- function(initial_A,genotype_to_phenotype_function,n_generations)
+RunSimulation <- function(initial_A,function_index,n_generations)
 {
+	genotype_to_phenotype_function <- GetGenotypeToPhenotypeFunction(function_index)
+	genotype_to_phenotype_description <- GetGenotypeToPhenotypeFunctionDescription(function_index)
+
 	n_alleles <- 2
 	n_genotypes <- 3
 	n_phenotypes <- 3
@@ -168,10 +187,11 @@ RunSimulation <- function(initial_A,genotype_to_phenotype_function,n_generations
 	}
 	t <- t[-nrow(t),] 
 	
+	png(filename=paste("Day12_",function_index,"_",initial_A * 100,"_alleles_in_time.png"))
 	plot(
 		as.matrix(t[2]),ylim=c(0,1),
 		type="l",col="red",
-		main="Allele frequencies in time",
+		main=paste("Allele frequencies in time for ",genotype_to_phenotype_description),
 		xlab="Time (generations)",ylab="Allele frequency"
 	)
 	lines(as.matrix(t[3]),col="blue")
@@ -182,11 +202,13 @@ RunSimulation <- function(initial_A,genotype_to_phenotype_function,n_generations
 		legend_y,
 		c("A","a"),col=c("red","blue"),pch=c(16,16)
 	)
-	
+	dev.off()
+
+	png(filename=paste("Day12_",function_index,"_",initial_A * 100,"_genotypes_in_time.png"))
 	plot(
 		as.matrix(t[4]),ylim=c(0,1),
 		type="l",col=PhenotypeToPlotColor(genotype_to_phenotype_function("AA")),
-		main="Genotype frequencies in time",
+		main=paste("Genotype frequencies in time for ",genotype_to_phenotype_description),
 		xlab="Time (generations)",ylab="Genotype frequency"
 	)
 	lines(as.matrix(t[5]),col=PhenotypeToPlotColor(genotype_to_phenotype_function("Aa")))
@@ -207,19 +229,26 @@ RunSimulation <- function(initial_A,genotype_to_phenotype_function,n_generations
 			PhenotypeToPlotColor(genotype_to_phenotype_function("aa"))
 		),pch=c(16,16)
 	)
+  dev.off()
 
+	png(filename=paste("Day12_",function_index,"_",initial_A * 100,"_triplot.png"))
 	triplot(as.matrix(t[,c(4:6)]),
+		main=paste("Genotype frequencies in time for ",genotype_to_phenotype_description),
 	  label=c(genotype_to_phenotype_function("AA"),genotype_to_phenotype_function("Aa"),genotype_to_phenotype_function("aa")),
 	  grid = TRUE,
 		type="l"
 	)
+  dev.off()
 
   return (t)
 }
 
 
-genotype_to_phenotype_function <- GenotypeToPhenotype2
-initial_A <- 0.5
-n_generations <- 50
-t <- RunSimulation(initial_A,genotype_to_phenotype_function,n_generations)
-
+for (initial_A in c(0.1,0.5,0.9))
+{
+	for (function_index in seq(1:3))
+	{
+	  n_generations <- 50
+	  t <- RunSimulation(initial_A,function_index,n_generations)
+	}
+}
