@@ -60,23 +60,26 @@
 \begin_body
 
 \begin_layout Subsubsection*
-a) Convince yourself that graph (A) above corresponds to Figure 4a of that
- article.
- How have the fitness values in the matrix been determined? Why are all
+a) How have the fitness values in the matrix been determined? Why are all
  the diagonal elements equal to 1.0?
 \end_layout
 
 \begin_layout Standard
-The graph does correspond to the article
+The fitness values in the matrix have been determined with the method described
+ in Lande&Arnold (1983, Evolution).
+ This method, however, appears to assume that the relation between phenotype
+ (throat color) and fitness proxy (number of females monopolized and shared)
+ are additive (for example, the fitness of the orange morph is high when
+ there is a high blue morph density).
+ In this system, that assumption does not hold (for example, the fitness
+ of the orange morph is high when there is a high blue morph density and
+ there is a low yellow morph density).
 \end_layout
 
 \begin_layout Standard
-The fitness values probably have been determined by something with figure
- 2.
-\end_layout
-
-\begin_layout Standard
-The diagonals are 1.0, because a 
+The diagonals are 1.0, because Sinervo&Lively assume each morph to have a
+ relative fitness of 1.0 to itself.
+ This assumes each morph has the same densitity-dependent effect on itself.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -344,7 +347,18 @@ FJ Weissing, personal communication
 \end_layout
 
 \begin_layout Standard
-I think there is a range error in this reasoning.
+Although there are rumors that this method is commonly done
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+F.
+ Sozzi, personal communication
+\end_layout
+
+\end_inset
+
+, I do think there is a range error in this reasoning.
  The maximum proportion of phenotypic traits can be explained by (additive)
  genetic differences is 100% at most, or 
 \begin_inset Formula $0\leqslant h^{2}\leqslant1$

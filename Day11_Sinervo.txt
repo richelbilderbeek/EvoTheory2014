@@ -1,0 +1,20 @@
+
+Frequencies:matrix(
+  [0.2],
+  [0.3],
+  [0.5]
+);
+
+Payoff:matrix(
+  [1.0,1.0,1.0],
+  [2.0,1.0,0.1],
+  [0.3,4.0,1.0]
+);
+
+Frequencies_next:Payoff.Frequencies;
+
+/* Does not work according to https://www.ma.utexas.edu/pipermail/maxima/2006/001582.html */
+solve(is(equal(Payoff.Frequencies,Frequencies)));
+solve(is(equal(Payoff.Frequencies,Frequencies)),Frequencies);
+solve(equal(Payoff.Frequencies,Frequencies));
+solve(equal(Payoff.Frequencies,Frequencies),Frequencies);
