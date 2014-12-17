@@ -6,6 +6,7 @@ library(klaR)
 
 source('SinervoData.R')
 source('../R/Genetics.R')
+source('Day12_test.R')
 
 CreatePhenotypeFrequencies <- function(pY = 0.0, pB = 0.0, pO = 0.0)
 {
@@ -48,12 +49,81 @@ GenotypeToPhenotype3 <- function(genotype)
 	assert("Unknown genotype, should be 'AA', 'Aa' or 'aa'",1==2)
 }
 
+PhenotypeFrequenciesToGenotypeDensities <- function(phenotypes_frequencies,phenotype_to_genenotype_function)
+{
+	genotypes_frequencies <- phenotypes_frequencies
+	names(genotypes_frequencies) <- phenotype_to_genenotype_function(names(phenotypes_frequencies))
+	return (genotypes_frequencies)
+}
+
+PhenotypeToGenotype1 <- function(phenotypes)
+{
+	if (length(phenotypes) == 1)
+	{
+		phenotype <- phenotypes[1]
+		if (phenotype == "O") return ("AA")
+		if (phenotype == "Y") return ("Aa")
+		if (phenotype == "B") return ("aa")
+		assert("Unknown phenotype, should be 'B', 'O' or 'Y'",1==2)
+	}
+	r <- c()
+	for (phenotype in phenotypes)
+	{
+		r <- c(r,PhenotypeToGenotype1(phenotype))
+	}
+	return (r)
+}
+
+PhenotypeToGenotype2 <- function(phenotypes)
+{
+	if (length(phenotypes) == 1)
+	{
+		phenotype <- phenotypes[1]
+		if (phenotype == "B") return ("AA")
+		if (phenotype == "O") return ("Aa")
+		if (phenotype == "Y") return ("aa")
+		assert("Unknown phenotype, should be 'B', 'O' or 'Y'",1==2)
+	}
+	r <- c()
+	for (phenotype in phenotypes)
+	{
+		r <- c(r,PhenotypeToGenotype2(phenotype))
+	}
+	return (r)
+}
+
+PhenotypeToGenotype3 <- function(phenotypes)
+{
+	if (length(phenotypes) == 1)
+	{
+		phenotype <- phenotypes[1]
+		if (phenotype == "Y") return ("AA")
+		if (phenotype == "B") return ("Aa")
+		if (phenotype == "O") return ("aa")
+		assert("Unknown phenotype, should be 'B', 'O' or 'Y'",1==2)
+	}
+	r <- c()
+	for (phenotype in phenotypes)
+	{
+		r <- c(r,PhenotypeToGenotype3(phenotype))
+	}
+	return (r)
+}
+
 GetGenotypeToPhenotypeFunction <- function(genotype_to_phenotype_function)
 {
   if (genotype_to_phenotype_function == 1) { return(GenotypeToPhenotype1) }
   if (genotype_to_phenotype_function == 2) { return(GenotypeToPhenotype2) }
   if (genotype_to_phenotype_function == 3) { return(GenotypeToPhenotype3) }
 	assert("Unknown genotype_to_phenotype_function, should be '1', '2' or '3'",1==2)
+}
+
+GetPhenotypeToGenotypeFunction <- function(phenotype_to_genotype_function)
+{
+  if (phenotype_to_genotype_function == 1) { return(PhenotypeToGenotype1) }
+  if (phenotype_to_genotype_function == 2) { return(PhenotypeToGenotype2) }
+  if (phenotype_to_genotype_function == 3) { return(PhenotypeToGenotype3) }
+	assert("Unknown phenotype_to_genotype_function, should be '1', '2' or '3'",1==2)
 }
 
 GetGenotypeToPhenotypeFunctionDescription <- function(genotype_to_phenotype_function)
@@ -77,6 +147,7 @@ PhenotypeToPlotColor <- function(phenotype)
 RunSimulation <- function(initial_A,function_index,n_generations,year)
 {
 	genotype_to_phenotype_function <- GetGenotypeToPhenotypeFunction(function_index)
+	phenotype_to_genenotype_function <- GetPhenotypeToGenotypeFunction(function_index)
 	genotype_to_phenotype_description <- GetGenotypeToPhenotypeFunctionDescription(function_index)
 
 	n_alleles <- 2
@@ -85,10 +156,13 @@ RunSimulation <- function(initial_A,function_index,n_generations,year)
 	
 	# phenotypes_in_time: keeps track of all frequencies in time
 	t_n_rows <- n_generations
-	t_n_cols <- 1 + n_alleles + n_genotypes + n_phenotypes + n_phenotypes + 1
+	t_n_cols <- 1 + n_alleles + n_genotypes + n_phenotypes
 	t <- data.frame(matrix(0,t_n_rows,t_n_cols))
-	colnames(t) <- c("t","pA_gametes","pa_gametes","pAA_juveniles","pAa_juveniles","paa_juveniles","pY","pB","pO","predY","predB","predO","error")
+	colnames(t) <- c("t","pA_gametes","pa_gametes","pAA_juveniles","pAa_juveniles","paa_juveniles","pY","pB","pO")
 	rownames(t) <- seq(1:n_generations)
+	initial_phenotypes <- CreatePredictedPhenotypes()["1990",]
+	initial_genotypes <- PhenotypeFrequenciesToGenotypeDensities(initial_phenotypes,phenotype_to_genenotype_function)
+	
 	t$pA_gametes[1] <- initial_A
 	t$pa_gametes[1] <- 1.0 -initial_A
 	
@@ -100,8 +174,6 @@ RunSimulation <- function(initial_A,function_index,n_generations,year)
 		
 		gamete_A <- t$pA_gametes[i]
 		gamete_a <- t$pa_gametes[i]
-# 		gamete_A <- if(i > 1) {t$pA_gametes[i-1]} else {initial_A}
-# 		gamete_a <- if(i > 1) {t$pa_gametes[i-1]} else {1.0 - initial_A}
 		
 		assert("Gamete allele frequenies must sum up to one",abs(gamete_A + gamete_a - 1.0) < 0.0001)
 	
@@ -137,8 +209,7 @@ RunSimulation <- function(initial_A,function_index,n_generations,year)
 	
 		offspring_phenotypes <- CreatePhenotypeFrequencies(offspring_Y,offspring_B,offspring_O)
 		fitness_matrix <- CreateFitnessMatrix(year)
-	  assert("Must work for matrix multiplication",nrow(fitness_matrix) == ncol(fitness_matrix))
-	
+		
 	  phenotype_fitness <- data.matrix(fitness_matrix)  %*% data.matrix(offspring_phenotypes)
 	  
 		average_fitness  <- (offspring_Y * phenotype_fitness[1,1]) + (offspring_B * phenotype_fitness[2,1]) + (offspring_O * phenotype_fitness[3,1])
@@ -174,7 +245,6 @@ RunSimulation <- function(initial_A,function_index,n_generations,year)
 		  t$pa_gametes[i+1] <- adult_gametes_a  
 		}
 	}
-	#t <- t[-nrow(t),] 
 
 	png(filename=paste("Day12_",function_index,"_",initial_A * 100,"_",year,"_alleles_in_time.png",sep=""))
 	plot(
@@ -254,19 +324,21 @@ RunSimulation <- function(initial_A,function_index,n_generations,year)
   return (t)
 }
 
+TestDay12()
 
-for (year in c(1996,2001))
-{
-	for (initial_A in c(0.1,0.5,0.9))
-	{
-		for (function_index in seq(1:3))
-		{
-			n_generations <- 50
-      if (year == 2001) { n_generations <- 100 }
-		  t <- RunSimulation(initial_A,function_index,n_generations,year)
-		}
-	}
-}
+
+# for (year in c(1996,2001))
+# {
+# 	for (initial_A in c(0.1,0.5,0.9))
+# 	{
+# 		for (function_index in seq(1:3))
+# 		{
+# 			n_generations <- 50
+#       if (year == 2001) { n_generations <- 100 }
+# 		  t <- RunSimulation(initial_A,function_index,n_generations,year)
+# 		}
+# 	}
+# }
 
 t <- RunSimulation(0.05,1,50,1996)
 t
