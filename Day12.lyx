@@ -64,7 +64,7 @@ Exercise 2
 \end_layout
 
 \begin_layout Standard
-Payoff matrix of 1998
+Payoff matrix of 1996
 \end_layout
 
 \begin_layout Subsection
@@ -72,21 +72,23 @@ Function = 1
 \end_layout
 
 \begin_layout Standard
-When the heterozygote corresponds to the yellow phenotype, all three phenotypes
- will remain in the population.
+For the 1996 dataset, when the heterozygote corresponds to the yellow phenotype,
+ all three phenotypes will remain in the population.
  This is independent of the initial frequency of the A allele.
+ For the 2001 dataset, however, the final population will be monomorphous
+ for blue.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename Day12_ 1 _ 10 _genotypes_in_time.png
+	filename Day12_1_10_1996_triplot.png
 	scale 40
 
 \end_inset
 
 
 \begin_inset Graphics
-	filename Day12_ 1 _ 10 _triplot.png
+	filename Day12_1_50_2001_triplot.png
 	scale 40
 
 \end_inset
@@ -100,14 +102,14 @@ Initial A = 0.9
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename Day12_ 1 _ 90 _genotypes_in_time.png
+	filename Day12_1_90_1996_triplot.png
 	scale 40
 
 \end_inset
 
 
 \begin_inset Graphics
-	filename Day12_ 1 _ 90 _triplot.png
+	filename Day12_1_90_2001_triplot.png
 	scale 40
 
 \end_inset
@@ -123,18 +125,19 @@ Function = 2
 When the heterozygote corresponds to the orangle phenotype, the population
  will become monomorphous for yellow.
  This is independent of the initial frequency of the A allele.
+ This behavior is the same for both datasets.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename Day12_ 2 _ 90 _genotypes_in_time.png
+	filename Day12_2_90_1996_triplot.png
 	scale 40
 
 \end_inset
 
 
 \begin_inset Graphics
-	filename Day12_ 2 _ 90 _triplot.png
+	filename Day12_2_90_2001_triplot.png
 	scale 40
 
 \end_inset
@@ -150,18 +153,19 @@ Function = 3
 When the heterozygote corresponds to the blue phenotype, the population
  will become monomorphous for orange.
  This is independent of the initial frequency of the A allele.
+ This behavior is the same for both datasets.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename Day12_ 3 _ 90 _genotypes_in_time.png
+	filename Day12_3_90_1996_triplot.png
 	scale 40
 
 \end_inset
 
 
 \begin_inset Graphics
-	filename Day12_ 3 _ 90 _triplot.png
+	filename Day12_3_90_2001_triplot.png
 	scale 40
 
 \end_inset

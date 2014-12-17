@@ -2,26 +2,8 @@ rm(list = ls())
 options(error = browser)
 options(echo = FALSE)
 library(klaR)
-library(testit)
 
-CreateFitnessMatrix <- function()
-{
-	fitness_matrix_n_rows <- 3
-	fitness_matrix_n_cols <- 3
-	fitness_matrix <- data.frame(matrix(0,fitness_matrix_n_rows,fitness_matrix_n_cols))
-	fitness_matrix[1,1] <- 1.0
-	fitness_matrix[2,1] <- 2.0
-	fitness_matrix[3,1] <- 0.3
-	fitness_matrix[1,2] <- 1.0
-	fitness_matrix[2,2] <- 1.0
-	fitness_matrix[3,2] <- 4.0
-	fitness_matrix[1,3] <- 2.0
-	fitness_matrix[2,3] <- 0.1
-	fitness_matrix[3,3] <- 1.0
-	rownames(fitness_matrix) <- c("Y","B","O")
-	colnames(fitness_matrix) <- c("Y","B","O")
-	return (fitness_matrix)
-}
+source('SinervoData.R')
 
 CreatePhenotypeFrequencies <- function(pY = 0.0, pB = 0.0, pO = 0.0)
 {
@@ -90,7 +72,7 @@ PhenotypeToPlotColor <- function(phenotype)
 
 
 
-RunSimulation <- function(initial_A,function_index,n_generations)
+RunSimulation <- function(initial_A,function_index,n_generations,year)
 {
 	genotype_to_phenotype_function <- GetGenotypeToPhenotypeFunction(function_index)
 	genotype_to_phenotype_description <- GetGenotypeToPhenotypeFunctionDescription(function_index)
@@ -101,22 +83,24 @@ RunSimulation <- function(initial_A,function_index,n_generations)
 	
 	# phenotypes_in_time: keeps track of all frequencies in time
 	t_n_rows <- n_generations
-	t_n_cols <- 1 + n_alleles + n_genotypes + n_phenotypes
+	t_n_cols <- 1 + n_alleles + n_genotypes + n_phenotypes + n_phenotypes + 1
 	t <- data.frame(matrix(0,t_n_rows,t_n_cols))
-	colnames(t) <- c("A","a","AA","Aa","aa","Y","B","O")
+	colnames(t) <- c("t","pA_gametes","pa_gametes","pAA_juveniles","pAa_juveniles","paa_juveniles","pY","pB","pO","predY","predB","predO","error")
 	rownames(t) <- seq(1:n_generations)
-	t[1,1] = 1
-	t[1,2] = initial_A
-	t[1,3] = 1.0 - initial_A
-	t
+	t$pA_gametes[1] <- initial_A
+	t$pa_gametes[1] <- 1.0 -initial_A
 	
 	# Plot traits in time
 	# Start at t=2, because t=1 denotes the initial values
-	for (i in c(2:n_generations))
+	for (i in c(1:n_generations))
 	{
-		t[i,1] <- i
-		gamete_A <- t[i-1,2]
-		gamete_a <- t[i-1,3]
+		t$t[i] <- i
+		
+		gamete_A <- t$pA_gametes[i]
+		gamete_a <- t$pa_gametes[i]
+# 		gamete_A <- if(i > 1) {t$pA_gametes[i-1]} else {initial_A}
+# 		gamete_a <- if(i > 1) {t$pa_gametes[i-1]} else {1.0 - initial_A}
+		
 		assert("Gamete allele frequenies must sum up to one",abs(gamete_A + gamete_a - 1.0) < 0.0001)
 	
 		offspring_AA = (gamete_A*gamete_A)
@@ -125,9 +109,9 @@ RunSimulation <- function(initial_A,function_index,n_generations)
 		offspring_sum_genotypes <- sum(offspring_AA,offspring_Aa,offspring_aa)
 	  assert("Offspring genotype frequencies must sum up to one",abs(offspring_sum_genotypes-1.0) < 0.001)
 	
-		t[i-1,4] <- offspring_AA
-		t[i-1,5] <- offspring_Aa
-		t[i-1,6] <- offspring_aa
+		t$pAA_juveniles[i] <- offspring_AA
+		t$pAa_juveniles[i] <- offspring_Aa
+		t$paa_juveniles[i] <- offspring_aa
 	
 		offspring_Y <- 0.0
 		offspring_B <- 0.0
@@ -145,12 +129,12 @@ RunSimulation <- function(initial_A,function_index,n_generations)
 		assert("Sum of phenotype frequencies must sum to one",
 			abs(offspring_sum_phenotypes-1.0) < 0.001
 		)
-	  t[i-1,7] <- offspring_Y
-		t[i-1,8] <- offspring_B
-		t[i-1,9] <- offspring_O
+	  t$pY[i] <- offspring_Y
+		t$pB[i] <- offspring_B
+		t$pO[i] <- offspring_O
 	
 		offspring_phenotypes <- CreatePhenotypeFrequencies(offspring_Y,offspring_B,offspring_O)
-		fitness_matrix <- CreateFitnessMatrix()
+		fitness_matrix <- CreateFitnessMatrix(year)
 	  assert("Must work for matrix multiplication",nrow(fitness_matrix) == ncol(fitness_matrix))
 	
 	  phenotype_fitness <- data.matrix(fitness_matrix)  %*% data.matrix(offspring_phenotypes)
@@ -182,19 +166,22 @@ RunSimulation <- function(initial_A,function_index,n_generations)
 	
 		assert("Adult phenotypes must sum up to one", sum(adult_gametes_A + adult_gametes_a -1.0) < 0.0001)
 	
-		t[i,2] <- adult_gametes_A
-		t[i,3] <- adult_gametes_a  
+		if (i < n_generations)
+		{
+		  t$pA_gametes[i+1] <- adult_gametes_A
+		  t$pa_gametes[i+1] <- adult_gametes_a  
+		}
 	}
-	t <- t[-nrow(t),] 
-	
-	png(filename=paste("Day12_",function_index,"_",initial_A * 100,"_alleles_in_time.png"))
+	#t <- t[-nrow(t),] 
+
+	png(filename=paste("Day12_",function_index,"_",initial_A * 100,"_",year,"_alleles_in_time.png",sep=""))
 	plot(
-		as.matrix(t[2]),ylim=c(0,1),
+		as.matrix(t$pA_gametes),ylim=c(0,1),
 		type="l",col="red",
-		main=paste("Allele frequencies in time for ",genotype_to_phenotype_description),
+		main=paste("Allele frequencies in time for ",genotype_to_phenotype_description, " (",year,")"),
 		xlab="Time (generations)",ylab="Allele frequency"
 	)
-	lines(as.matrix(t[3]),col="blue")
+	lines(as.matrix(t$pa_gametes),col="blue")
 	legend_x <- 0.6 * n_generations
 	legend_y <- 1.0
 	legend(
@@ -204,15 +191,15 @@ RunSimulation <- function(initial_A,function_index,n_generations)
 	)
 	dev.off()
 
-	png(filename=paste("Day12_",function_index,"_",initial_A * 100,"_genotypes_in_time.png"))
+	png(filename=paste("Day12_",function_index,"_",initial_A * 100,"_",year,"_genotypes_in_time.png",sep=""))
 	plot(
-		as.matrix(t[4]),ylim=c(0,1),
+		as.matrix(t$pAA_juveniles),ylim=c(0,1),
 		type="l",col=PhenotypeToPlotColor(genotype_to_phenotype_function("AA")),
-		main=paste("Genotype frequencies in time for ",genotype_to_phenotype_description),
+		main=paste("Genotype frequencies in time for ",genotype_to_phenotype_description, " (",year,")"),
 		xlab="Time (generations)",ylab="Genotype frequency"
 	)
-	lines(as.matrix(t[5]),col=PhenotypeToPlotColor(genotype_to_phenotype_function("Aa")))
-	lines(as.matrix(t[6]),col=PhenotypeToPlotColor(genotype_to_phenotype_function("aa")))
+	lines(as.matrix(t$pAa_juveniles),col=PhenotypeToPlotColor(genotype_to_phenotype_function("Aa")))
+	lines(as.matrix(t$paa_juveniles),col=PhenotypeToPlotColor(genotype_to_phenotype_function("aa")))
 	legend_x <- 0.6 * n_generations
 	legend_y <- 1.0
 	legend(
@@ -231,9 +218,9 @@ RunSimulation <- function(initial_A,function_index,n_generations)
 	)
   dev.off()
 
-	png(filename=paste("Day12_",function_index,"_",initial_A * 100,"_triplot.png"))
-	triplot(as.matrix(t[,c(4:6)]),
-		main=paste("Genotype frequencies in time for ",genotype_to_phenotype_description),
+	png(filename=paste("Day12_",function_index,"_",initial_A * 100,"_",year,"_triplot.png",sep=""))
+	triplot(as.matrix(t[,c("pY","pB","pO")]),
+		main=paste("Phenotypes in time for ",genotype_to_phenotype_description, " (",year,")"),
 	  label=c(genotype_to_phenotype_function("AA"),genotype_to_phenotype_function("Aa"),genotype_to_phenotype_function("aa")),
 	  grid = TRUE,
 		type="l"
@@ -244,11 +231,18 @@ RunSimulation <- function(initial_A,function_index,n_generations)
 }
 
 
-for (initial_A in c(0.1,0.5,0.9))
+for (year in c(1996,2001))
 {
-	for (function_index in seq(1:3))
+	for (initial_A in c(0.1,0.5,0.9))
 	{
-	  n_generations <- 50
-	  t <- RunSimulation(initial_A,function_index,n_generations)
+		for (function_index in seq(1:3))
+		{
+			n_generations <- 50
+      if (year == 2001) { n_generations <- 100 }
+		  t <- RunSimulation(initial_A,function_index,n_generations,year)
+		}
 	}
 }
+
+t <- RunSimulation(0.05,1,50,1996)
+t
