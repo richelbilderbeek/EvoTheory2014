@@ -1,9 +1,11 @@
 rm(list = ls())
 options(error = browser)
 options(echo = FALSE)
+library(testit)
 library(klaR)
 
 source('SinervoData.R')
+source('../R/Genetics.R')
 
 CreatePhenotypeFrequencies <- function(pY = 0.0, pB = 0.0, pO = 0.0)
 {
@@ -94,7 +96,7 @@ RunSimulation <- function(initial_A,function_index,n_generations,year)
 	# Start at t=2, because t=1 denotes the initial values
 	for (i in c(1:n_generations))
 	{
-		t$t[i] <- i
+		t$t[i] <- i + 1990 - 1 # -1 due to R arrays have a first index at 1
 		
 		gamete_A <- t$pA_gametes[i]
 		gamete_a <- t$pa_gametes[i]
@@ -223,8 +225,30 @@ RunSimulation <- function(initial_A,function_index,n_generations,year)
 		main=paste("Phenotypes in time for ",genotype_to_phenotype_description, " (",year,")"),
 	  label=c(genotype_to_phenotype_function("AA"),genotype_to_phenotype_function("Aa"),genotype_to_phenotype_function("aa")),
 	  grid = TRUE,
-		type="l"
+		type="l",
+		col="red"
 	)
+	par(new=TRUE)
+	triplot(as.matrix(CreatePredictedPhenotypes()),
+		main=paste("Phenotypes in time for ",genotype_to_phenotype_description, " (",year,")"),
+	  label=c(genotype_to_phenotype_function("AA"),genotype_to_phenotype_function("Aa"),genotype_to_phenotype_function("aa")),
+	  grid = TRUE,
+		type="l",
+		col="black"
+	)
+  legend(
+		0,
+		0,
+		c(
+			"predicted",
+			"observed"
+		),
+		col=c(
+			"red",
+			"black"
+		),pch=c(16,16)
+	)
+
   dev.off()
 
   return (t)

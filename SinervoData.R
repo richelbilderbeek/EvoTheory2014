@@ -45,7 +45,7 @@ CreateFitnessMatrix <- function(year)
 	assert("Unknown year, should be '1996' or '2001'",1==2)
 }
 
-CreatePredictedPhenotypes <- function()
+CreatePredictedPhenotypesRaw <- function()
 {
 	t <- data.frame(
 		matrix(
@@ -62,11 +62,32 @@ CreatePredictedPhenotypes <- function()
 				0.45,0.46,0.09
 		  ),
 			10,
-			3
+			3,
+		  byrow = TRUE
 		)
 	)
 	names(t) = c("Y","B","O")
 	rownames(t) = seq(1990,1999)
-	t
   return (t)
 }	
+
+CreatePredictedPhenotypes <- function()
+{
+  t <- CreatePredictedPhenotypesRaw()
+	return (t / rowSums(t))
+}
+
+PlotPredictedPhenotypes <- function()
+{
+	CreatePredictedPhenotypes()
+	rowSums(CreatePredictedPhenotypes())
+	triplot(as.matrix(CreatePredictedPhenotypes()),
+		main=paste("Observed phenotypes in time\n(Sinervo & Lively (1996), Nature)"),
+	  label=c("Y","B","O"),
+	  grid = TRUE,
+		type="l",
+		col="black"
+	)
+}
+
+# PlotPredictedPhenotypes()
