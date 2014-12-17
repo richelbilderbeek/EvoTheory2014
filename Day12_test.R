@@ -1,5 +1,7 @@
 library(testit)
 
+source('Day12_simulation.R')
+
 TestDay12 <- function()
 {
 	for (function_index in seq(1:3))

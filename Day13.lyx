@@ -1,0 +1,312 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+Exercise 3
+\end_layout
+
+\begin_layout Subsection*
+Payoff matrix
+\end_layout
+
+\begin_layout Standard
+When using the payoff matrix, you use the following equations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N_{i}(t+1)=N_{i}(t)+F_{i}.\frac{w_{i}(t)}{\bar{w}}.N_{i}(t)\left(1-\frac{N_{i}}{K_{i}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+p_{o}(t)\\
+p_{y}(t)
+\end{array}\right)=\left(\begin{array}{c}
+\frac{N_{o}(t)}{N_{o}(t)+N_{y}(t)}\\
+\frac{N_{y}(t)}{N_{o}(t)+N_{y}(t)}
+\end{array}\right),\left(\begin{array}{c}
+w_{o}(t)\\
+w_{y}(t)
+\end{array}\right)=\left(\begin{array}{cc}
+1 & 1.61\\
+1 & 1
+\end{array}\right)\left(\begin{array}{c}
+p_{o}(t)\\
+p_{y}(t)
+\end{array}\right)
+\]
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+Using the parameters, you get a two-cycle as shown below: 
+\begin_inset Formula 
+\[
+N(t=0)=\left(\begin{array}{c}
+N_{o}\\
+N_{y}
+\end{array}\right)=\left(\begin{array}{c}
+0.1\\
+0.2
+\end{array}\right),\left(\begin{array}{c}
+F_{o}\\
+F_{y}
+\end{array}\right)=\left(\begin{array}{c}
+2.2\\
+2.2
+\end{array}\right),\left(\begin{array}{c}
+K_{o}\\
+K_{y}
+\end{array}\right)=\left(\begin{array}{c}
+0.7\\
+1.18
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Day13_Female_densities_in_time_simple_O01_Y02.png
+	lyxscale 25
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Day13_Female_densities_simple_O01_Y02.png
+	lyxscale 25
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the figures above, a high density of one species occurs simultaneously
+ with a low density of the other.
+\end_layout
+
+\begin_layout Standard
+When using the initial densities below, this evasion game changes to a coordinat
+ion game, in which both morphs are both either at high or both at low densities:
+ 
+\begin_inset Formula 
+\[
+N(t=0)=\left(\begin{array}{c}
+N_{o}\\
+N_{y}
+\end{array}\right)=\left(\begin{array}{c}
+0.1\\
+0.3
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Day13_Female_densities_in_time_simple_O01_Y03.png
+	lyxscale 25
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Day13_Female_densities_simple_O01_Y03.png
+	lyxscale 25
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Fitness functions
+\end_layout
+
+\begin_layout Standard
+When using the fitness formula's below table 1, you use the following equations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N_{i}(t+1)=N_{i}(t)+F_{i}.\frac{w_{i}(t)}{\bar{w}}.N_{i}(t)\left(1-\frac{N_{i}}{K_{i}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+p_{o}(t)\\
+p_{y}(t)
+\end{array}\right)=\left(\begin{array}{c}
+\frac{N_{o}(t)}{\sum N_{i}(t)}\\
+\frac{N_{y}(t)}{\sum N_{i}(t)}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is my own magic:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{cc}
+N_{oo}(t) & 2.N_{oy}(t)\\
+2.N_{oy}(t) & N_{yy}(t)
+\end{array}\right)=\left(\begin{array}{cc}
+p_{o}(t)p_{o}(t)\sum N_{i}(t) & 2.p_{o}(t)p_{y}(t)\sum N_{i}(t)\\
+2.p_{o}(t)p_{y}(t)\sum N_{i}(t) & p_{y}(t)p_{y}(t)\sum N_{i}(t)
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+w_{o}(t)\\
+w_{y}(t)
+\end{array}\right)=\left(\begin{array}{c}
+w_{o1}(t)+w_{o2-5}(t)\\
+w_{y1}(t)+w_{y2-5}(t)
+\end{array}\right)=\left(\begin{array}{c}
+fill.in.formula.here\\
+fill.in.formula.here
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using the parameters, you get a two-cycle as shown below: 
+\begin_inset Formula 
+\[
+N(t=0)=\left(\begin{array}{c}
+N_{o}\\
+N_{y}
+\end{array}\right)=\left(\begin{array}{c}
+0.1\\
+0.2
+\end{array}\right),\left(\begin{array}{c}
+F_{o}\\
+F_{y}
+\end{array}\right)=\left(\begin{array}{c}
+2.2\\
+2.2
+\end{array}\right),\left(\begin{array}{c}
+K_{o}\\
+K_{y}
+\end{array}\right)=\left(\begin{array}{c}
+0.7\\
+1.18
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

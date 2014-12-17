@@ -156,7 +156,7 @@ When the heterozygote corresponds to the blue phenotype, the population
  This behavior is the same for both datasets.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsection*
 \begin_inset Graphics
 	filename Day12_3_90_1996_triplot.png
 	scale 40
@@ -166,6 +166,25 @@ When the heterozygote corresponds to the blue phenotype, the population
 
 \begin_inset Graphics
 	filename Day12_3_90_2001_triplot.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Heritabilities
+\end_layout
+
+\begin_layout Standard
+Calculated the heritabilites as Sinervo did
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Day12_heritabilities.png
+	lyxscale 40
 	scale 40
 
 \end_inset
