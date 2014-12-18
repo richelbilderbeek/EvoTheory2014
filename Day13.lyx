@@ -64,11 +64,12 @@ Exercise 3
 \end_layout
 
 \begin_layout Subsection*
-Payoff matrix
+a) Payoff matrix
 \end_layout
 
 \begin_layout Standard
-When using the payoff matrix, you use the following equations:
+I first created a simpler version based on the payoff matrix in table 1.
+ When using the payoff matrix, you use the following equations:
 \end_layout
 
 \begin_layout Standard
@@ -202,7 +203,7 @@ N_{y}
 \end_layout
 
 \begin_layout Subsection*
-Fitness functions
+b+c) Discrete logistic ESS model
 \end_layout
 
 \begin_layout Standard
@@ -223,12 +224,23 @@ N_{i}(t+1)=N_{i}(t)+F_{i}.\frac{w_{i}(t)}{\bar{w}}.N_{i}(t)\left(1-\frac{N_{i}}{
 \begin_layout Standard
 \begin_inset Formula 
 \[
+N(t)=\sum N_{i}(t)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
 \left(\begin{array}{c}
 p_{o}(t)\\
 p_{y}(t)
 \end{array}\right)=\left(\begin{array}{c}
-\frac{N_{o}(t)}{\sum N_{i}(t)}\\
-\frac{N_{y}(t)}{\sum N_{i}(t)}
+\frac{N_{o}(t)}{N(t)}\\
+\frac{N_{y}(t)}{N(t)}
 \end{array}\right)
 \]
 
@@ -238,7 +250,91 @@ p_{y}(t)
 \end_layout
 
 \begin_layout Standard
-This is my own magic:
+\begin_inset Formula 
+\[
+w_{o1}=0.98-0.84N_{oo}+0.27N_{oy}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+w_{y1}=1.04+0.02N_{yo}-0.35N_{yy}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+w_{o1,2-5}=0.18-0.38N_{oo}-0.14N_{oy}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+w_{o12-5}=0.22-0.03N_{yo}-0.35N_{yy}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+How 
+\begin_inset Formula $N_{oo}$
+\end_inset
+
+,
+\begin_inset Formula $N_{oy}$
+\end_inset
+
+,
+\begin_inset Formula $N_{yo}$
+\end_inset
+
+ and 
+\begin_inset Formula $N_{yy}$
+\end_inset
+
+ are calculated is unknow=n.
+ What Sinervo does with each of these four equations above is unknown, so
+ I formulate it as such, and will expand this mystery function below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+w_{o}(t)\\
+w_{y}(t)
+\end{array}\right)=\left(\begin{array}{c}
+f(w_{o1}(t),w_{o2-5}(t))\\
+f(w_{y1}(t),w_{y2-5}(t))
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+My hypothesis: Nij = number of born juveniles from gametes with i and j
+ alleles
 \end_layout
 
 \begin_layout Standard
@@ -248,8 +344,50 @@ This is my own magic:
 N_{oo}(t) & 2.N_{oy}(t)\\
 2.N_{oy}(t) & N_{yy}(t)
 \end{array}\right)=\left(\begin{array}{cc}
-p_{o}(t)p_{o}(t)\sum N_{i}(t) & 2.p_{o}(t)p_{y}(t)\sum N_{i}(t)\\
-2.p_{o}(t)p_{y}(t)\sum N_{i}(t) & p_{y}(t)p_{y}(t)\sum N_{i}(t)
+p_{o}(t)p_{o}(t)N(t) & 2.p_{o}(t)p_{y}(t)N(t)\\
+2.p_{o}(t)p_{y}(t)N(t) & p_{y}(t)p_{y}(t)N(t)
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+My hypothesis: 
+\begin_inset Formula $w_{o1}(t)$
+\end_inset
+
+ is the fitness of the first egg, 
+\begin_inset Formula $w_{o2-5}(t)$
+\end_inset
+
+ of all later eggs.
+ Defining E = number of eggs:
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+E_{o}\\
+E_{y}
+\end{array}\right)=2\left(\begin{array}{c}
+F_{o}\\
+F_{y}
 \end{array}\right)
 \]
 
@@ -265,11 +403,11 @@ p_{o}(t)p_{o}(t)\sum N_{i}(t) & 2.p_{o}(t)p_{y}(t)\sum N_{i}(t)\\
 w_{o}(t)\\
 w_{y}(t)
 \end{array}\right)=\left(\begin{array}{c}
-w_{o1}(t)+w_{o2-5}(t)\\
-w_{y1}(t)+w_{y2-5}(t)
+f(w_{o1}(t),w_{o2-5}(t))\\
+f(w_{y1}(t),w_{y2-5}(t))
 \end{array}\right)=\left(\begin{array}{c}
-fill.in.formula.here\\
-fill.in.formula.here
+w_{o1}(t)+\left(E_{o}-1\right)w_{o2-5}(t)\\
+w_{y1}(t)+\left(E_{y}-1\right)w_{y2-5}(t)
 \end{array}\right)
 \]
 
@@ -278,8 +416,26 @@ fill.in.formula.here
 
 \end_layout
 
+\begin_layout Subsection*
+d) Questions oabout discrete logistic ESS model
+\end_layout
+
+\begin_layout Subsubsection*
+Can you reconstruct the dynamics observed in figure 4 (top)? 
+\end_layout
+
 \begin_layout Standard
-Using the parameters, you get a two-cycle as shown below: 
+Never.
+\end_layout
+
+\begin_layout Subsubsection*
+For which values of the parameter Fi do you find stable oscillations of
+ both morphs? Which other outcomes do you observe?
+\end_layout
+
+\begin_layout Standard
+There are three different scenario's that I observed.
+ Using these parameters below: 
 \begin_inset Formula 
 \[
 N(t=0)=\left(\begin{array}{c}
@@ -289,12 +445,6 @@ N_{y}
 0.1\\
 0.2
 \end{array}\right),\left(\begin{array}{c}
-F_{o}\\
-F_{y}
-\end{array}\right)=\left(\begin{array}{c}
-2.2\\
-2.2
-\end{array}\right),\left(\begin{array}{c}
 K_{o}\\
 K_{y}
 \end{array}\right)=\left(\begin{array}{c}
@@ -302,6 +452,71 @@ K_{y}
 1.18
 \end{array}\right)
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And using different values of 
+\begin_inset Formula $\left(\begin{array}{c}
+F_{o}\\
+F_{y}
+\end{array}\right)$
+\end_inset
+
+combinations, you get the following scenario's:
+\end_layout
+
+\begin_layout Subsubsection*
+Damped oscillations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Day13_DLEM_1.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Stable two cycles
+\end_layout
+
+\begin_layout Standard
+There is a narrow range in which the population reaches a stable two-cycle
+ after some sort of crash:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Day13_DLEM_2.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Extinction
+\end_layout
+
+\begin_layout Standard
+Although the model works with frequencies (assuming infinite populations),
+ the population will still lose one morph.
+ Note that 
+\begin_inset Formula $F_{o}$
+\end_inset
+
+ is only slightly increased compared to the previous run.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Day13_DLEM_3.png
 
 \end_inset
 

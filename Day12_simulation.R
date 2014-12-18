@@ -3,6 +3,74 @@ library(testit)
 source('SinervoData.R')
 source('../R/Genetics.R')
 
+# Creates all fitness matrices as one big table
+#
+# 1 1 1
+# 1 1 1
+# 1 1 1
+# 2 2 2
+# 2 2 2
+# 2 2 2
+# 3 3 3
+# . . .
+# CreateAllFitnessMatrices <- function()
+# {
+# 
+# 	 fitness_matrices <- c(
+# 		CreateFitnessMatrix1(1996),
+# 		CreateFitnessMatrix2(1996),
+# 		CreateFitnessMatrix3(1996),
+# 		CreateFitnessMatrix1(2001),
+# 		CreateFitnessMatrix2(2001),
+# 		CreateFitnessMatrix3(2001)
+# 	)
+# 	for (i in c(1:6))
+# 	{
+# 		fitness_matrix <- fitness_matrices[i]
+# 		assert("",ncol(fitness_matrix) == nrow(fitness_matrix))
+# 	}
+# 	return (c)
+# }
+
+CreateFitnessMatrix1 <- function(year)
+{
+  m <- CreateFitnessMatrix(year)
+	assert("",ncol(m) > 1)
+	assert("",nrow(m) > 1)
+	colnames(m) <- c("Aa","aa","AA")
+	rownames(m) <- c("Aa","aa","AA")
+
+	m <- SortFitnessMatrix(m)
+
+	return (m)	
+}
+
+CreateFitnessMatrix2 <- function(year)
+{
+  m <- CreateFitnessMatrix(year)
+	assert("",ncol(m) > 1)
+	assert("",nrow(m) > 1)
+	colnames(m) <- c("aa","AA","Aa")
+	rownames(m) <- c("aa","AA","Aa")
+
+	m <- SortFitnessMatrix(m)
+
+	return (m)	
+}
+
+CreateFitnessMatrix3 <- function(year)
+{
+  m <- CreateFitnessMatrix(year)
+	assert("",ncol(m) > 1)
+	assert("",nrow(m) > 1)
+  colnames(m) <- c("AA","Aa","aa")
+	rownames(m) <- c("AA","Aa","aa")
+
+	m <- SortFitnessMatrix(m)
+
+	return (m)	
+}
+
 CreatePhenotypeFrequencies <- function(pY, pB, pO = 1.0 - pY - pB)
 {
 	n_rows <- 1
@@ -138,195 +206,80 @@ PhenotypeToPlotColor <- function(phenotype)
 	assert("Unknown phenotype, should be 'AA', 'Aa' or 'aa'",1==2)
 }
 
-
-
-RunSimulation <- function(initial_phenotype_densities,function_index,n_generations,year)
+RunSimulation <- function(initial_genotype_frequencies_adults,fitness_matrix,n_generations)
 {
-	genotype_to_phenotype_function <- GetGenotypeToPhenotypeFunction(function_index)
-	phenotype_to_genenotype_function <- GetPhenotypeToGenotypeFunction(function_index)
-	genotype_to_phenotype_description <- GetGenotypeToPhenotypeFunctionDescription(function_index)
+# 	print("RunSimulation:Test parameters")
+# 	initial_genotype_frequencies_adults <- CreateGenotypeFrequencies(0.1,0.2,0.7)
+# 	fitness_matrix <- CreateFitnessMatrix1(1996)
+# 	n_generations <- 5
+# 	initial_genotype_frequencies_adults = CreateGenotypeFrequencies(0.2,0.3,0.5)
+# 	print("~RunSimulation:Test parameters")
 
-	n_alleles <- 2
-	n_genotypes <- 3
-	n_phenotypes <- 3
+	assert("",ncol(initial_genotype_frequencies_adults)==ncol(fitness_matrix))
+  SortGenotypeFrequencies(initial_genotype_frequencies_adults)
 	
-	# phenotypes_in_time: keeps track of all frequencies in time
-	t_n_rows <- n_generations
-	t_n_cols <- 1 + n_alleles + n_genotypes + n_phenotypes
-	t <- data.frame(matrix(0,t_n_rows,t_n_cols))
-	colnames(t) <- c("t","pA_gametes","pa_gametes","pAA_juveniles","pAa_juveniles","paa_juveniles","pY","pB","pO")
-	rownames(t) <- seq(1:n_generations)
-	initial_genotypes <- PhenotypeFrequenciesToGenotypeDensities(initial_phenotype_densities,phenotype_to_genenotype_function)
-	initial_alleles <- GetAlleleFrequenciesFromGenotypeFrequencies(initial_genotypes)
-	t$pA_gametes[1] <- initial_alleles$A
-	t$pa_gametes[1] <- initial_alleles$a
+	t <- data.frame(matrix(0,0,length(initial_genotype_frequencies_adults)))
+	colnames(t) <- colnames(initial_genotype_frequencies_adults)
 	
-	# Plot traits in time
-	# Start at t=2, because t=1 denotes the initial values
-	for (i in c(1:n_generations))
-	{
-		t$t[i] <- i + 1990 - 1 # -1 due to R arrays have a first index at 1
-		
-		
-		gamete_A <- t$pA_gametes[i]
-		gamete_a <- t$pa_gametes[i]
-		
-		assert("Gamete allele frequenies must sum up to one",abs(gamete_A + gamete_a - 1.0) < 0.0001)
-	
-		offspring_AA = (gamete_A*gamete_A)
-	  offspring_Aa = 2.0 * gamete_A * gamete_a
-	  offspring_aa = gamete_a * gamete_a
-		offspring_sum_genotypes <- sum(offspring_AA,offspring_Aa,offspring_aa)
-	  assert("Offspring genotype frequencies must sum up to one",abs(offspring_sum_genotypes-1.0) < 0.001)
-	
-		t$pAA_juveniles[i] <- offspring_AA
-		t$pAa_juveniles[i] <- offspring_Aa
-		t$paa_juveniles[i] <- offspring_aa
-	
-		offspring_Y <- 0.0
-		offspring_B <- 0.0
-		offspring_O <- 0.0
-		if (genotype_to_phenotype_function("AA") == "Y") {	offspring_Y <- offspring_AA }
-		if (genotype_to_phenotype_function("AA") == "B") {	offspring_B <- offspring_AA }
-		if (genotype_to_phenotype_function("AA") == "O") {	offspring_O <- offspring_AA }
-		if (genotype_to_phenotype_function("Aa") == "Y") {	offspring_Y <- offspring_Aa }
-		if (genotype_to_phenotype_function("Aa") == "B") {	offspring_B <- offspring_Aa }
-		if (genotype_to_phenotype_function("Aa") == "O") {	offspring_O <- offspring_Aa }
-		if (genotype_to_phenotype_function("aa") == "Y") {	offspring_Y <- offspring_aa }
-		if (genotype_to_phenotype_function("aa") == "B") {	offspring_B <- offspring_aa }
-		if (genotype_to_phenotype_function("aa") == "O") {	offspring_O <- offspring_aa }
-		offspring_sum_phenotypes <- sum(offspring_Y,offspring_B,offspring_O)
-		assert("Sum of phenotype frequencies must sum to one",
-			abs(offspring_sum_phenotypes-1.0) < 0.001
-		)
-	  t$pY[i] <- offspring_Y
-		t$pB[i] <- offspring_B
-		t$pO[i] <- offspring_O
-	
-		offspring_phenotypes <- CreatePhenotypeFrequencies(offspring_Y,offspring_B,offspring_O)
-		fitness_matrix <- CreateFitnessMatrix(year)
-		
-	  phenotype_fitness <- data.matrix(fitness_matrix)  %*% data.matrix(offspring_phenotypes)
-	  
-		average_fitness  <- (offspring_Y * phenotype_fitness[1,1]) + (offspring_B * phenotype_fitness[2,1]) + (offspring_O * phenotype_fitness[3,1])
-	
-		# Replicator equations
-		adult_Y <- offspring_Y * phenotype_fitness[1,1] / average_fitness
-	  adult_B <- offspring_B * phenotype_fitness[2,1] / average_fitness
-	  adult_O <- offspring_O * phenotype_fitness[3,1] / average_fitness
-	
-		assert("Adult phenotypes must sum up to one", sum(adult_Y+adult_B+adult_O-1.0) < 0.0001)
-	  adult_genotypes_AA <- 0
-	  adult_genotypes_Aa <- 0
-	  adult_genotypes_aa <- 0
-		if (genotype_to_phenotype_function("AA") == "Y") {	adult_genotypes_AA <- adult_Y }
-		if (genotype_to_phenotype_function("AA") == "B") {	adult_genotypes_AA <- adult_B }
-		if (genotype_to_phenotype_function("AA") == "O") {	adult_genotypes_AA <- adult_O }
-		if (genotype_to_phenotype_function("Aa") == "Y") {	adult_genotypes_Aa <- adult_Y }
-		if (genotype_to_phenotype_function("Aa") == "B") {	adult_genotypes_Aa <- adult_B }
-		if (genotype_to_phenotype_function("Aa") == "O") {	adult_genotypes_Aa <- adult_O }
-		if (genotype_to_phenotype_function("aa") == "Y") {	adult_genotypes_aa <- adult_Y }
-		if (genotype_to_phenotype_function("aa") == "B") {	adult_genotypes_aa <- adult_B }
-		if (genotype_to_phenotype_function("aa") == "O") {	adult_genotypes_aa <- adult_O }
-	
-	
-	  adult_gametes_A <- adult_genotypes_AA + (0.5 * adult_genotypes_Aa)
-	  adult_gametes_a <- adult_genotypes_aa + (0.5 * adult_genotypes_Aa)
-	
-		assert("Adult phenotypes must sum up to one", sum(adult_gametes_A + adult_gametes_a -1.0) < 0.0001)
-	
-		if (i < n_generations)
-		{
-		  t$pA_gametes[i+1] <- adult_gametes_A
-		  t$pa_gametes[i+1] <- adult_gametes_a  
-		}
-	}
-  return (t)
+	t <- rbind(initial_genotype_frequencies_adults)
+
+	assert("",as.matrix(t[1,]) == as.matrix(initial_genotype_frequencies_adults))
+  for (i in c(2:n_generations))
+  {
+  	genotype_densities_adults <- t[i-1,]
+  	# genotype_densities_adults
+    genotype_densities_new_adults <- CalculateNextGenotypeDensities(genotype_densities_adults,fitness_matrix)
+  	# genotype_densities_new_adults
+  	t <- rbind(t,genotype_densities_new_adults)
+  }
+	return (t)
 }
 
-TestSimulation <- function()
+SortFitnessMatrix <-function(m)
 {
-  year <- 1996
-	function_index <- 1
-  initial_phenotype_densities <- CreatePhenotypeFrequencies(0.1,0.6)
-
-
-	genotype_to_phenotype_function <- GetGenotypeToPhenotypeFunction(function_index)
-	phenotype_to_genenotype_function <- GetPhenotypeToGenotypeFunction(function_index)
-	genotype_to_phenotype_description <- GetGenotypeToPhenotypeFunctionDescription(function_index)
-
-	initial_genotype_frequencies <- PhenotypeFrequenciesToGenotypeDensities(initial_phenotype_densities,phenotype_to_genenotype_function)
-	initial_allele_frequencies <- GetAlleleFrequenciesFromGenotypeFrequencies(initial_genotype_frequencies)
-  initial_year <- 1990
-		
-
-	# LOOP
-	
-  current_year <- initial_year
-	current_genotype_frequencies <- initial_genotype_frequencies
-	current_allele_frequencies <- GetAlleleFrequenciesFromGenotypeFrequencies(current_genotype_frequencies)
-
-		
-	t$pAA_juveniles[i] <- offspring_AA
-	t$pAa_juveniles[i] <- offspring_Aa
-	t$paa_juveniles[i] <- offspring_aa
-
-	offspring_Y <- 0.0
-	offspring_B <- 0.0
-	offspring_O <- 0.0
-	if (genotype_to_phenotype_function("AA") == "Y") {	offspring_Y <- offspring_AA }
-	if (genotype_to_phenotype_function("AA") == "B") {	offspring_B <- offspring_AA }
-	if (genotype_to_phenotype_function("AA") == "O") {	offspring_O <- offspring_AA }
-	if (genotype_to_phenotype_function("Aa") == "Y") {	offspring_Y <- offspring_Aa }
-	if (genotype_to_phenotype_function("Aa") == "B") {	offspring_B <- offspring_Aa }
-	if (genotype_to_phenotype_function("Aa") == "O") {	offspring_O <- offspring_Aa }
-	if (genotype_to_phenotype_function("aa") == "Y") {	offspring_Y <- offspring_aa }
-	if (genotype_to_phenotype_function("aa") == "B") {	offspring_B <- offspring_aa }
-	if (genotype_to_phenotype_function("aa") == "O") {	offspring_O <- offspring_aa }
-	offspring_sum_phenotypes <- sum(offspring_Y,offspring_B,offspring_O)
-	assert("Sum of phenotype frequencies must sum to one",
-		abs(offspring_sum_phenotypes-1.0) < 0.001
-	)
-  t$pY[i] <- offspring_Y
-	t$pB[i] <- offspring_B
-	t$pO[i] <- offspring_O
-
-	offspring_phenotypes <- CreatePhenotypeFrequencies(offspring_Y,offspring_B,offspring_O)
-	fitness_matrix <- CreateFitnessMatrix(year)
-	
-  phenotype_fitness <- data.matrix(fitness_matrix)  %*% data.matrix(offspring_phenotypes)
+	m
+	m <- m[c("AA","Aa","aa")]
+	m <- m[order(names(m)),]
   
-	average_fitness  <- (offspring_Y * phenotype_fitness[1,1]) + (offspring_B * phenotype_fitness[2,1]) + (offspring_O * phenotype_fitness[3,1])
+	#assert("",names(m) == "AA","Aa","aa")
+	#assert("",rownames(m) == "AA","Aa","aa")
+  return (m)
+}
 
-	# Replicator equations
-	adult_Y <- offspring_Y * phenotype_fitness[1,1] / average_fitness
-  adult_B <- offspring_B * phenotype_fitness[2,1] / average_fitness
-  adult_O <- offspring_O * phenotype_fitness[3,1] / average_fitness
-
-	assert("Adult phenotypes must sum up to one", sum(adult_Y+adult_B+adult_O-1.0) < 0.0001)
-  adult_genotypes_AA <- 0
-  adult_genotypes_Aa <- 0
-  adult_genotypes_aa <- 0
-	if (genotype_to_phenotype_function("AA") == "Y") {	adult_genotypes_AA <- adult_Y }
-	if (genotype_to_phenotype_function("AA") == "B") {	adult_genotypes_AA <- adult_B }
-	if (genotype_to_phenotype_function("AA") == "O") {	adult_genotypes_AA <- adult_O }
-	if (genotype_to_phenotype_function("Aa") == "Y") {	adult_genotypes_Aa <- adult_Y }
-	if (genotype_to_phenotype_function("Aa") == "B") {	adult_genotypes_Aa <- adult_B }
-	if (genotype_to_phenotype_function("Aa") == "O") {	adult_genotypes_Aa <- adult_O }
-	if (genotype_to_phenotype_function("aa") == "Y") {	adult_genotypes_aa <- adult_Y }
-	if (genotype_to_phenotype_function("aa") == "B") {	adult_genotypes_aa <- adult_B }
-	if (genotype_to_phenotype_function("aa") == "O") {	adult_genotypes_aa <- adult_O }
+SortGenotypes <-function(m)
+{
+	m <- m[c("AA","Aa","aa")]
+  return (m)
+}
 
 
-  adult_gametes_A <- adult_genotypes_AA + (0.5 * adult_genotypes_Aa)
-  adult_gametes_a <- adult_genotypes_aa + (0.5 * adult_genotypes_Aa)
+CalculateNextGenotypeDensities <- function(genotype_frequencies_parents,fitness_matrix)
+{
+# 	print("CalculateNextGenotypeDensities: Testing arguments")
+#   genotype_frequencies_parents <- CreateGenotypeFrequencies(0.2,0.3,0.5)
+#   fitness_matrix <- CreateFitnessMatrix1(1996)
+# 	print("~CalculateNextGenotypeDensities: Testing arguments")
 
-	assert("Adult phenotypes must sum up to one", sum(adult_gametes_A + adult_gametes_a -1.0) < 0.0001)
-
-	if (i < n_generations)
-	{
-	  t$pA_gametes[i+1] <- adult_gametes_A
-	  t$pa_gametes[i+1] <- adult_gametes_a  
-	}
+	assert("",nrow(genotype_frequencies_parents)==1)
+	assert("",ncol(genotype_frequencies_parents)==ncol(fitness_matrix))
 	
+	# Let the genotypes create gametes
+	allele_frequencies_gametes <- GetAlleleFrequenciesFromGenotypeFrequencies(genotype_frequencies_parents)
+
+	# Mix the gametes and create juveniles
+	genotype_frequencies_juveniles <- GetGenotypeFrequenciesFromAlleleFrequencies(allele_frequencies_gametes)
+
+	# Calculate the genotype fitnesses	
+  genotype_fitness_adults <- t(data.matrix(fitness_matrix)  %*% t(data.matrix(genotype_frequencies_juveniles)))
+  
+	# Normalized by w_bar
+	mean_weightes_fitness <- sum(genotype_frequencies_juveniles * genotype_fitness_adults)
+
+	# Replicator equation
+	genotype_frequencies_adults <- genotype_frequencies_juveniles * genotype_fitness_adults / mean_weightes_fitness
+
+	assert("",nrow(genotype_frequencies_adults)==1)
+  assert("",abs(sum(genotype_frequencies_adults) - 1) < 0.001)
+	
+  return 	(genotype_frequencies_adults)
 }

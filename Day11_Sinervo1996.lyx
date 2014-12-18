@@ -163,7 +163,7 @@ w'_{o}
 1.5\\
 0.75\\
 1.76
-\end{array}\right)=1.43
+\end{array}\right)=1.405
 \]
 
 \end_inset
@@ -212,6 +212,19 @@ p_{o}^{*}
 0.28
 \end{array}\right)
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FS: 0.57, 0.13, 0.30 using mathematic derivation 
+\end_layout
 
 \end_inset
 
@@ -290,6 +303,19 @@ Also, when choosing values of later years, the model its predictions never
  match the observed frequencies of two years later.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TODO Damping stronger
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection*
 f) What is their main argument for using the replicator dynamics nevertheless?
  Are you convinced by their argument?
@@ -358,22 +384,8 @@ F.
 
 \end_inset
 
-, I do think there is a range error in this reasoning.
- The maximum proportion of phenotypic traits can be explained by (additive)
- genetic differences is 100% at most, or 
-\begin_inset Formula $0\leqslant h^{2}\leqslant1$
-\end_inset
-
-.
- In this data, the half-of heritabilities measured e 
-\begin_inset Formula $[0,1]$
-\end_inset
-
-, which, when doubled, exceeds the range of 
-\begin_inset Formula $h^{2}$
-\end_inset
-
- (imagine the value 0.6 was measured).
+, CATEGORIES INSTEAD OF A PHYSICSY ORDER (e.g.
+ wavelength), HETEROZYOTE CHOSEN ARBITADTUEFKWLFEUI
 \end_layout
 
 \end_body
