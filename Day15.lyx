@@ -68,7 +68,64 @@ Rich
 \begin_inset Formula $\grave{e}$
 \end_inset
 
-l Bilderbeek
+l Bilderbeek 
+\begin_inset Graphics
+	filename CC-BY-NC-SA.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+https://github.com/richelbilderbeek/EvoTheory2014
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Preamble
+\end_layout
+
+\begin_layout Standard
+I am surprised that Sinervo hypothesis a cycle in densities:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename SinervoPhenotypesInTime.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Especially, when taking a closer look, the years 1995-1997 behave in the
+ opposite direction: when blue is dominant, yellow (the morph at disadvantage)
+ outgrows the orange morph.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename SinervoCounterclockwise.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -406,23 +463,6 @@ FJ Weissing, personal communication
 
 \begin_layout Section*
 Exercise 2
-\end_layout
-
-\begin_layout Standard
-Payoff matrix of 1996
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-HERE Do hares eat wolves argument
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection*

@@ -1,4 +1,5 @@
 library(testit)
+library(klaR)
 
 CreateFitnessMatrix1996 <- function()
 {
@@ -79,7 +80,6 @@ CreatePredictedPhenotypes <- function()
 
 PlotPredictedPhenotypes <- function()
 {
-	CreatePredictedPhenotypes()
 	rowSums(CreatePredictedPhenotypes())
 	triplot(as.matrix(CreatePredictedPhenotypes()),
 		main=paste("Observed phenotypes in time\n(Sinervo & Lively (1996), Nature)"),
@@ -90,4 +90,39 @@ PlotPredictedPhenotypes <- function()
 	)
 }
 
-# PlotPredictedPhenotypes()
+PlotPredictedPhenotypesInTime <- function()
+{
+	png("SinervoPhenotypesInTime.png")
+	plot(
+		CreatePredictedPhenotypes()$Y,
+		main=paste("Observed phenotypes in time\n(Sinervo & Lively (1996), Nature)"),
+		type="l",
+		ylim=c(0,1),
+		ylab="Frequency",
+		col="yellow",
+		lwd = 3
+	)
+	lines(
+		CreatePredictedPhenotypes()$B,
+		col="blue",
+		lwd = 1
+	)
+	lines(
+		CreatePredictedPhenotypes()$O,
+		col="orange",
+		lwd = 2
+	)
+	legend_x <- 4
+	legend_y <- 1.0
+	legend(
+		legend_x,
+		legend_y,
+		c("yellow","blue","orange"),
+		col=c("yellow","blue","orange"),
+		pch=c(16,16),
+		lwd = c(3,1,2)
+	)
+	dev.off()
+}
+
+PlotPredictedPhenotypesInTime()
