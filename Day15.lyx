@@ -59,6 +59,18 @@
 
 \begin_body
 
+\begin_layout Title
+The lizard project
+\end_layout
+
+\begin_layout Author
+Rich
+\begin_inset Formula $\grave{e}$
+\end_inset
+
+l Bilderbeek
+\end_layout
+
 \begin_layout Section
 Exercise 1
 \end_layout
@@ -1062,6 +1074,67 @@ Although the model works with frequencies (assuming infinite populations),
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Reflection
+\end_layout
+
+\begin_layout Standard
+About 80% of the time was spent on finding out details of the R programming
+ language for exercise 2, instead of doing actual work.
+ Luckily, I did switch to LibreOffice Calc for exercise 3 again.
+ Next time, I will not use R if there is a deadline.
+ 
+\end_layout
+
+\begin_layout Standard
+An example of R behaviour that surprised me:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# Put a and b in a container
+\end_layout
+
+\begin_layout Plain Layout
+
+t <- c(a,b)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Check that the first element in the container is the first element put
+ in
+\end_layout
+
+\begin_layout Plain Layout
+
+# If these differ, ironically thank the R Development Core Team
+\end_layout
+
+\begin_layout Plain Layout
+
+if(t[1] != a) { print("Thanks R!") }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Acknowledgements
+\end_layout
+
+\begin_layout Standard
+Part of this work has improved from collaborations with Francesca Sozzi.
+ 
 \end_layout
 
 \end_body
