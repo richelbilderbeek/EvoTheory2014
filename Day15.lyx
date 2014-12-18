@@ -1,0 +1,1068 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Exercise 1
+\end_layout
+
+\begin_layout Subsubsection*
+1.a) How have the fitness values in the matrix been determined? Why are all
+ the diagonal elements equal to 1.0?
+\end_layout
+
+\begin_layout Standard
+The fitness values in the matrix have been determined with the method described
+ in Lande&Arnold (1983, Evolution).
+ This method, however, appears to assume that the relation between phenotype
+ (throat color) and fitness proxy (number of females monopolized and shared)
+ are additive (for example, the fitness of the orange morph is high when
+ there is a high blue morph density).
+ In this system, that assumption does not hold (for example, the fitness
+ of the orange morph is high when there is a high blue morph density and
+ there is a low yellow morph density).
+\end_layout
+
+\begin_layout Standard
+The diagonals are 1.0, because Sinervo&Lively assume each morph to have a
+ relative fitness of 1.0 to itself.
+ This assumes each morph has the same densitity-dependent effect on itself.
+\end_layout
+
+\begin_layout Subsubsection*
+1.b) Calculate the fitness of the three morphs and the mean fitness of the
+ population for the special case 
+\begin_inset Formula $p_{Y}=0.2$
+\end_inset
+
+, 
+\begin_inset Formula $p_{B}=0.3$
+\end_inset
+
+, 
+\begin_inset Formula $p_{O}=0.5$
+\end_inset
+
+.
+ Which morph has the highest fitness?
+\end_layout
+
+\begin_layout Standard
+Calculating the absolute fitness:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+w'_{Y}\\
+w'_{B}\\
+w'_{o}
+\end{array}\right)=\left(\begin{array}{ccc}
+1 & w_{YB} & w_{YO}\\
+w_{BY}, & 1 & w_{BO}\\
+w_{OY} & w_{OB} & 1
+\end{array}\right)\left(\begin{array}{c}
+p{}_{Y}\\
+p_{B}\\
+p_{o}
+\end{array}\right)=\left(\begin{array}{ccc}
+1 & 1 & 2\\
+2 & 1 & 0.1\\
+0.3 & 4 & 1
+\end{array}\right)\left(\begin{array}{c}
+0.2\\
+0.3\\
+0.5
+\end{array}\right)=\left(\begin{array}{c}
+1.5\\
+0.75\\
+1.76
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The heighest absolute fitness is for the orange morphs, with a value of
+ 1.76.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\bar{w}=\sum p_{i}.w_{i}=\left(\begin{array}{c}
+p{}_{Y}\\
+p_{B}\\
+p_{o}
+\end{array}\right)\cdot\left(\begin{array}{c}
+w'_{Y}\\
+w'_{B}\\
+w'_{o}
+\end{array}\right)=\left(\begin{array}{c}
+0.2\\
+0.3\\
+0.5
+\end{array}\right)\cdot\left(\begin{array}{c}
+1.5\\
+0.75\\
+1.76
+\end{array}\right)=1.405
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+1.c) Show that the system converges to an equilibrium at which all three
+ morphs have the same fitness
+\end_layout
+
+\begin_layout Standard
+The system consists out of damped oscillations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Day11_c.png
+	lyxscale 40
+	scale 40
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Day11_c_2.png
+	lyxscale 40
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The system converges to (found by numeric approximation in a spreadsheet):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+p_{Y}^{*}\\
+p_{B}^{*}\\
+p_{o}^{*}
+\end{array}\right)=\left(\begin{array}{c}
+0.52\\
+0.21\\
+0.28
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FS: 0.57, 0.13, 0.30 using mathematic derivation 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+1.d) Check whether the model predictions plotted agree with your own predictions.
+ Do you agree with Sinervo and Lively that the model provides a satisfactory
+ explanation for the pattern found in nature? Why/why not?
+\end_layout
+
+\begin_layout Standard
+Plotting Sinervo's measured frequencies of 1990 (
+\begin_inset Formula $\left(\begin{array}{c}
+p{}_{Y}\\
+p_{B}\\
+p_{o}
+\end{array}\right)=\left(\begin{array}{c}
+0.33\\
+0.57\\
+0.11
+\end{array}\right)$
+\end_inset
+
+ ) the frequencies measured (blue) do not match the values predicted (grey).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Day11_d.png
+	lyxscale 70
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Also, when choosing values of later years, the model its predictions never
+ match the observed frequencies of two years later.
+ The system slowly converges to an equilibrium.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+1.e) Repeat your simulations, but now for the improved fitness estimates
+ by Sinervo.
+ Do they yield a better fit to the data?
+\end_layout
+
+\begin_layout Standard
+Plotting Sinervo's measured frequencies of 1990 (
+\begin_inset Formula $\left(\begin{array}{c}
+p{}_{Y}\\
+p_{B}\\
+p_{o}
+\end{array}\right)=\left(\begin{array}{c}
+0.33\\
+0.57\\
+0.11
+\end{array}\right)$
+\end_inset
+
+ ) the frequencies measured (blue) do not match the values predicted (grey).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Day11_e.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Also, when choosing values of later years, the model its predictions never
+ match the observed frequencies of two years later.
+ Additionally, the system converges stronger towards a stable equilibrium,
+ which -in my opinion- lessens the chance the model could potentially fit
+ the data observed.
+\end_layout
+
+\begin_layout Subsubsection*
+1.f) What is their main argument for using the replicator dynamics nevertheless?
+ Are you convinced by their argument?
+\end_layout
+
+\begin_layout Standard
+They use the replicator equation, because they assume 
+\begin_inset Formula $h^{2}=1$
+\end_inset
+
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+bottom-right of page 242
+\end_layout
+
+\end_inset
+
+, as is the case in asexuals.
+ They do this, as they measured 
+\begin_inset Formula $h^{2}=0.96$
+\end_inset
+
+ from a regression 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+see figure 3
+\end_layout
+
+\end_inset
+
+.
+ This regression actually yielded a 
+\begin_inset Formula $h^{2}=0.48$
+\end_inset
+
+, yet, 'because they only measured males, which only contribute to half
+ of the gametes, they extrapolate it by a factor of two (instead of measuring
+ the females)
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+FJ Weissing, personal communication
+\end_layout
+
+\end_inset
+
+'.
+ 
+\end_layout
+
+\begin_layout Standard
+Yet, this method is commonly done for traits that have a natural order
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+FJ Weissing, personal communication
+\end_layout
+
+\end_inset
+
+ (for example, tail length).
+ In this example, the scores assigned to the three phenotypes are chosen
+ arbitrarily.
+\end_layout
+
+\begin_layout Section*
+Exercise 2
+\end_layout
+
+\begin_layout Standard
+Payoff matrix of 1996
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+HERE Do hares eat wolves argument
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+2.a) One locus, two alleles
+\end_layout
+
+\begin_layout Standard
+In all coming scenario's, I expect no oscillations: the equations are similar
+ to the ones we used when discussing the Replicator Equation and Fisher's
+ Fundamental Theorem.
+ In this setup (one locus, two alleles), the population will follow the
+ Hardy-Weinberg line on a triplot.
+ The calculations of these examples were identical to these.
+\end_layout
+
+\begin_layout Subsubsection*
+2.a.1) Scenario 1: AA = O, Aa = Y, aa = B
+\end_layout
+
+\begin_layout Standard
+For the data of 1996, the population will fluidly move to a stable coexistence
+ of the three morphs, independent of the initial genotype distribution.
+\end_layout
+
+\begin_layout Standard
+For the data of 2001, the population will fluidly go towards a population
+ with blue morphs only, independent of the initial genotype distribution.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day12_1_10_1996_triplot.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day12_1_50_2001_triplot.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day12_1_90_1996_triplot.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day12_1_90_2001_triplot.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+2.a.2) Scenario 2: AA = B, Aa = O, aa = Y
+\end_layout
+
+\begin_layout Standard
+When the heterozygote corresponds to the orangle phenotype, the population
+ will become monomorphous for yellow.
+ This is independent of the initial frequency of the A allele.
+ This behavior is the same for both datasets.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day12_2_90_1996_triplot.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day12_2_90_2001_triplot.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+2.a.3) Scenario 3: AA = Y, Aa = B, aa = O
+\end_layout
+
+\begin_layout Standard
+When the heterozygote corresponds to the blue phenotype, the population
+ will become monomorphous for orange.
+ This is independent of the initial frequency of the A allele.
+ This behavior is the same for both datasets.
+\end_layout
+
+\begin_layout Subsubsection*
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day12_3_90_1996_triplot.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day12_3_90_2001_triplot.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+2.a.4) Heritabilities
+\end_layout
+
+\begin_layout Standard
+Heritability is dependent on the environment.
+ There is no such thing as a heritablity of 
+\begin_inset Formula $x$
+\end_inset
+
+ that is the same in all environments.
+ I tried to calculate the heritabilities according to FJW's explanation.
+ Except for the data point pre-calculated, all other data points are off.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day12_heritabilities.png
+	lyxscale 40
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+2.b) One locus, three alleles
+\end_layout
+
+\begin_layout Standard
+Did not do this.
+\end_layout
+
+\begin_layout Subsection*
+2.c) One locus, three alleles, partial dominance
+\end_layout
+
+\begin_layout Standard
+Did not do this.
+\end_layout
+
+\begin_layout Subsection*
+2.d) Considerations
+\end_layout
+
+\begin_layout Standard
+Only in one setup (2.a.1) the payoff matrix of 1996 yielded a prediction that
+ was qualitatively true, namely a stable coexistence of the three morphs.
+ Quantitively, both payoff matrices are very bad predictors.
+\end_layout
+
+\begin_layout Standard
+I cannot tell which genetic system is best, as I've only implemented one.
+ There are still plenty of systems I'd like to investigate, like using multiple
+ loci or infinitely may (quantitative genetics) or epigenetic inheritance
+ of phenotype.
+ I hope that the genetic system of the side-blotched lizard is once elucidated,
+ as it will render many assumptions made obsolete.
+ If I have to choose between models, I'd choose the one locus, three alleles
+ model with partial dominance, as I expect that genetics plays a minor role,
+ and this model has the most potential for adding randomness into it.
+\end_layout
+
+\begin_layout Section*
+Exercise 3
+\end_layout
+
+\begin_layout Subsection*
+3.a) Payoff matrix
+\end_layout
+
+\begin_layout Standard
+I first created a simpler version based on the payoff matrix in table 1.
+ When using the payoff matrix, you use the following equations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N_{i}(t+1)=N_{i}(t)+F_{i}.\frac{w_{i}(t)}{\bar{w}}.N_{i}(t)\left(1-\frac{N_{i}}{K_{i}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+p_{o}(t)\\
+p_{y}(t)
+\end{array}\right)=\left(\begin{array}{c}
+\frac{N_{o}(t)}{N_{o}(t)+N_{y}(t)}\\
+\frac{N_{y}(t)}{N_{o}(t)+N_{y}(t)}
+\end{array}\right),\left(\begin{array}{c}
+w_{o}(t)\\
+w_{y}(t)
+\end{array}\right)=\left(\begin{array}{cc}
+1 & 1.61\\
+1 & 1
+\end{array}\right)\left(\begin{array}{c}
+p_{o}(t)\\
+p_{y}(t)
+\end{array}\right)
+\]
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+Using the parameters, you get a two-cycle as shown below: 
+\begin_inset Formula 
+\[
+N(t=0)=\left(\begin{array}{c}
+N_{o}\\
+N_{y}
+\end{array}\right)=\left(\begin{array}{c}
+0.1\\
+0.2
+\end{array}\right),\left(\begin{array}{c}
+F_{o}\\
+F_{y}
+\end{array}\right)=\left(\begin{array}{c}
+2.2\\
+2.2
+\end{array}\right),\left(\begin{array}{c}
+K_{o}\\
+K_{y}
+\end{array}\right)=\left(\begin{array}{c}
+0.7\\
+1.18
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day13_Female_densities_in_time_simple_O01_Y02.png
+	lyxscale 25
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day13_Female_densities_simple_O01_Y02.png
+	lyxscale 25
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the figures above, a high density of one species occurs simultaneously
+ with a low density of the other.
+\end_layout
+
+\begin_layout Standard
+When using the initial densities below, this evasion game changes to a coordinat
+ion game, in which both morphs are both either at high or both at low densities:
+ 
+\begin_inset Formula 
+\[
+N(t=0)=\left(\begin{array}{c}
+N_{o}\\
+N_{y}
+\end{array}\right)=\left(\begin{array}{c}
+0.1\\
+0.3
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day13_Female_densities_in_time_simple_O01_Y03.png
+	lyxscale 25
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day13_Female_densities_simple_O01_Y03.png
+	lyxscale 25
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+3.b+c) Discrete logistic ESS model
+\end_layout
+
+\begin_layout Standard
+When using the fitness formula's below table 1, you use the following equations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N_{i}(t+1)=N_{i}(t)+F_{i}.\frac{w_{i}(t)}{\bar{w}}.N_{i}(t)\left(1-\frac{N_{i}}{K_{i}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N(t)=\sum N_{i}(t)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+p_{o}(t)\\
+p_{y}(t)
+\end{array}\right)=\left(\begin{array}{c}
+\frac{N_{o}(t)}{N(t)}\\
+\frac{N_{y}(t)}{N(t)}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+w_{o1}=0.98-0.84N_{oo}+0.27N_{oy}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+w_{y1}=1.04+0.02N_{yo}-0.35N_{yy}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+w_{o1,2-5}=0.18-0.38N_{oo}-0.14N_{oy}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+w_{o12-5}=0.22-0.03N_{yo}-0.35N_{yy}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+How 
+\begin_inset Formula $N_{oo}$
+\end_inset
+
+,
+\begin_inset Formula $N_{oy}$
+\end_inset
+
+,
+\begin_inset Formula $N_{yo}$
+\end_inset
+
+ and 
+\begin_inset Formula $N_{yy}$
+\end_inset
+
+ are calculated is unknow=n.
+ What Sinervo does with each of these four equations above is unknown, so
+ I formulate it as such, and will expand this mystery function below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+w_{o}(t)\\
+w_{y}(t)
+\end{array}\right)=\left(\begin{array}{c}
+f(w_{o1}(t),w_{o2-5}(t))\\
+f(w_{y1}(t),w_{y2-5}(t))
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+My hypothesis: Nij = number of born juveniles from gametes with i and j
+ alleles
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{cc}
+N_{oo}(t) & 2.N_{oy}(t)\\
+2.N_{oy}(t) & N_{yy}(t)
+\end{array}\right)=\left(\begin{array}{cc}
+p_{o}(t)p_{o}(t)N(t) & 2.p_{o}(t)p_{y}(t)N(t)\\
+2.p_{o}(t)p_{y}(t)N(t) & p_{y}(t)p_{y}(t)N(t)
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+My hypothesis: 
+\begin_inset Formula $w_{o1}(t)$
+\end_inset
+
+ is the fitness of the first egg, 
+\begin_inset Formula $w_{o2-5}(t)$
+\end_inset
+
+ of all later eggs.
+ Defining E = number of eggs:
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+E_{o}\\
+E_{y}
+\end{array}\right)=2\left(\begin{array}{c}
+F_{o}\\
+F_{y}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+w_{o}(t)\\
+w_{y}(t)
+\end{array}\right)=\left(\begin{array}{c}
+f(w_{o1}(t),w_{o2-5}(t))\\
+f(w_{y1}(t),w_{y2-5}(t))
+\end{array}\right)=\left(\begin{array}{c}
+w_{o1}(t)+\left(E_{o}-1\right)w_{o2-5}(t)\\
+w_{y1}(t)+\left(E_{y}-1\right)w_{y2-5}(t)
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+3.d) Questions oabout discrete logistic ESS model
+\end_layout
+
+\begin_layout Subsubsection*
+Can you reconstruct the dynamics observed in figure 4 (top)? 
+\end_layout
+
+\begin_layout Standard
+Never.
+\end_layout
+
+\begin_layout Subsubsection*
+For which values of the parameter Fi do you find stable oscillations of
+ both morphs? Which other outcomes do you observe?
+\end_layout
+
+\begin_layout Standard
+There are three different scenario's that I observed.
+ Using these parameters below: 
+\begin_inset Formula 
+\[
+N(t=0)=\left(\begin{array}{c}
+N_{o}\\
+N_{y}
+\end{array}\right)=\left(\begin{array}{c}
+0.1\\
+0.2
+\end{array}\right),\left(\begin{array}{c}
+K_{o}\\
+K_{y}
+\end{array}\right)=\left(\begin{array}{c}
+0.7\\
+1.18
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And using different values of 
+\begin_inset Formula $\left(\begin{array}{c}
+F_{o}\\
+F_{y}
+\end{array}\right)$
+\end_inset
+
+combinations, you get the following scenario's:
+\end_layout
+
+\begin_layout Subsubsection*
+Damped oscillations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day13_DLEM_1.png
+	lyxscale 80
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Stable two cycles
+\end_layout
+
+\begin_layout Standard
+There is a narrow range in which the population reaches a stable two-cycle
+ after some sort of crash:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day13_DLEM_2.png
+	lyxscale 80
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Extinction
+\end_layout
+
+\begin_layout Standard
+Although the model works with frequencies (assuming infinite populations),
+ the population will still lose one morph.
+ Note that 
+\begin_inset Formula $F_{o}$
+\end_inset
+
+ is only slightly increased compared to the previous run.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/richel/GitHubs/EvoTheory2014/Day13_DLEM_3.png
+	lyxscale 80
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
