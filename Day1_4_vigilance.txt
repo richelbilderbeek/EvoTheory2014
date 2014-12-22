@@ -13,6 +13,7 @@ pdf_filename:"/home/richel/GitHubs/Maxima/Day1_4_vigilance_output.pdf"$
 
 /* Write results to TeX file */
 stream: openw(tex_filename)$
+
 printf(stream,"\\documentclass{article}~%")$
 printf(stream,"~%")$
 printf(stream,"\\usepackage{listings}~%")$
@@ -31,11 +32,17 @@ printf(stream,"This article is created within the CAS program Maxima~%")$
 printf(stream,"and shows how to do algebraic manipuations and graphical plotting.~%")$
 printf(stream,"The output is in \\LaTeX~~ format.~%")$
 printf(stream,"\\end{abstract}~%")$
-
+printf(stream,"~%")$
+printf(stream,"\\section{Introduction}~%")$
+printf(stream,"~%")$
+printf(stream,"When an organism has found the time and suitable location to forage, it faces a trade-off:~%")$
+printf(stream,"looking down to search for prey, or looking up, to search for predators. Using simple~%")$
+printf(stream,"equations, the optimum strategy for a solitary individual is calculated.~%")$
+printf(stream,"~%")$
 printf(stream,"\\section{Exercise}~%")$
 printf(stream,"First, we write down all equations~%")$
 printf(stream,"(for definitions see table \\ref{table:table_definition} on page \\pageref{table:table_definition}).~%")$
-
+printf(stream,"~%")$
 printf(stream,"\\begin{table}[here]~%")$
 printf(stream,"  \\centering~%")$
 printf(stream,"  \\begin{tabular}{ | r | l | }~%")$
@@ -51,22 +58,26 @@ printf(stream,"  \\end{tabular}~%")$
 printf(stream,"  \\caption{Definitions}~%")$
 printf(stream,"  \\label{table:table_definition}~%")$
 printf(stream,"\\end{table}~%")$
+printf(stream,"~%")$
 
 
 Survival(v) := S(v) = v;
 
 printf(stream,tex(Survival(v),false))$ 
+printf(stream,"~%")$
 
 Foraging(v) := F(v) = 1.0 - (v^2);
 
 printf(stream,tex(Foraging(v),false))$ 
+printf(stream,"~%")$
 
 Fitness(v) := W(v) = ''(rhs(Survival(v)) + rhs(Foraging(v)));
 
 printf(stream,tex(Fitness(v),false))$ 
-
+printf(stream,"~%")$
 printf(stream,"The fitness function plotted is plotted in figure ~%")$
 printf(stream,"\\ref{figure:figure_fitness} on page \\pageref{figure:figure_fitness}.\\\\~%")$
+printf(stream,"~%")$
 
 plot2d(
   rhs(Fitness(v)),[v,0.0,1.0],
@@ -84,8 +95,7 @@ printf(stream,"}\\\\\\\\~%")$
 printf(stream,"  \\caption{Fitness function}~%")$
 printf(stream,"  \\label{figure:figure_fitness}~%")$
 printf(stream,"\\end{figure}~%")$
-
-
+printf(stream,"~%")$
 printf(stream,"To calculate the maximum or minimum, set the derivate to zero and solve it:~%")$
 
 FitnessDeriv(v) := diff(W(v),v) = ''(diff(rhs(Fitness(v)),v));
@@ -94,6 +104,7 @@ maximum:solve(rhs(FitnessDeriv(v))=0)[1];
 
 printf(stream,tex(FitnessDeriv(v)=0,false))$ 
 printf(stream,tex(maximum,false))$ 
+printf(stream,"~%")$
 
 printf(stream,"Thus, the optimal vigilance level $v$ equals:")$
 printf(stream,tex(rhs(maximum),false))$ 
@@ -106,6 +117,7 @@ printf(stream,"~%")$
 printf(stream,"To find out if it is a fitness minimum or maximum,~%")$
 printf(stream,"calculate the second derivative~%")$
 printf(stream,"and find out its value at the minimum or maximum:~%")$
+printf(stream,"~%")$
 
 FitnessDerivDeriv(v) := diff(W(v),v,2) = ''(diff(rhs(FitnessDeriv(v)),v));
 
@@ -113,12 +125,10 @@ printf(stream,tex(FitnessDerivDeriv(v),false))$
 
 if rhs(FitnessDerivDeriv(v))<0
 then 
-  printf(stream,"Thus, it is a maximum.~%")
+  printf(stream,"Thus, this value being below zero, it is a maximum.~%")
 else 
-  printf(stream,"Thus, it is a minimum.~%")
+  printf(stream,"Thus, this value being above zero, it is a minimum.~%")
 ;
-
-
 printf(stream,"~%")$
 printf(stream,"\\appendix~%")$
 printf(stream,"~%")$
