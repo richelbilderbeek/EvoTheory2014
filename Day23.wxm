@@ -1,0 +1,76 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* H&F97 equation 6 */
+/* p(z): probability of finding a place in a patch */
+/* z: dispersers within patch */
+/* N: number of offspring (is called 'n' in T&F96) */
+/* y_star: population dispersal rate */
+/* c: cost of migration, you die with chance c */
+p(z) = 1 / (n * (1-z+(y_star*(1-c))));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* H&F97 equation 7 */
+/* W(y,z) : fitness of mutant with dispersal strategy y within patch with dispersal strategy z */
+/* N: number of offspring (is called 'n' in T&F96) */
+/* y: mutant dispersal strategy */
+/* y_star: population dispersal rate */
+/* c: cost of migration, you die with chance c */
+W(y,z) := (N * (1-y) * p(z)) + (N * y * (1-c) * p(y_star));
+''W(y,z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Exercise 1.C */
+/* W: fitness */
+/* d: dispersal rate mutant */
+/* d_bar: average dispersal rate of patch */
+/* d_star: average dispersal rate of population */
+/* c: cost of migration, you die with chance c */
+W(d,d_bar,d_star) := ((1-d)/(1+d_bar+((1-c)*d_star))) + (((1-c)*d)/(1-(c*d)));
+tex1(W(d,d_bar,d_star));
+ChangeInFitness(w,d) := (r * ''(diff(W(d,d_bar,d_star),d))) + (R * ''(diff(W(d,d_bar,d_star),d_bar)));
+d_bar:d; 
+d_star:d;
+ChangeInFitness(w,d);
+tex1(ChangeInFitness(w,d));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* EXERCISE 1.D */
+d_star(N) := (sqrt(1+4*N*(N-1)*(c^2))+1-(2*N*c))/(sqrt(1+4*N*(N-1)*(c^2))+1-(2*N*(c^2)));
+d_star(1);
+tex1(d_star(1));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* EXERCISE 1.F */
+d_bar(n,c) := (1 + (2*n*c) - sqrt(1 + (4*n*(n-1)*(c^2))))/(2*n*c*(1+c));
+wxplot3d(
+  d_bar(n,c),[n,1,10],[c,0.0,1.0],
+  [title,"d_bar"],
+  [xlabel,"n"],
+  [ylabel,"c"],
+  [zlabel,"d_star"]
+);
+wxcontour_plot(d_bar(n,c),[n,1,10],[c,0.0,1.0],
+  [title,"d_bar"],
+  [xlabel,"n"],
+  [ylabel,"c"],
+  [zlabel,"d_star"]
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f(x) := x^2 + x + 1;
+wxplot2d(f(x),[x,-1,1]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

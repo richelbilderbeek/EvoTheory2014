@@ -1,0 +1,44 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* p: resident strategy, cooperation probability */
+/* q: mutant strategy, cooperation probability (in Adaptive Dynamics, this would have been called p_hat) */
+/* R: reward, gained when both cooperate */
+/* S: sucker's payoff, payoff when you cooperate, but the other defects */
+/* T: temptation to defect, payoff when you defect and the other cooperates */
+/* P: punishment, payoff when both defect */
+AbsoluteFitness(p,q) := (p*q*R) + (p*(1-q)*S) + ((1-p)*q*T) + ((1-p)*(1-q)*P);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* You can do either */
+/* - IF = AF(p,q) - AF(q,q) (invasion of value is above zero) */
+/* - IF = AF(p,q) / AF(q,q) (invasion if this ration is above one) */
+/* It depends on the context which is better */
+InvasionFitness(p,q) := AbsoluteFitness(p,q) - AbsoluteFitness(q,q);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+''(InvasionFitness(p,q));
+ratsimp(''(InvasionFitness(p,q)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(ratsimp(''(InvasionFitness(p,q))) = 0,q);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R:-1; S:-7; T:0; P:-5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Relatedness(p,q) := (r*p) + ((1–r)*q);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
