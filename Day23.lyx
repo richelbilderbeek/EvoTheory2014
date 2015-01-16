@@ -73,7 +73,7 @@ Symbol definitions
 
 \begin_layout Standard
 \begin_inset Tabular
-<lyxtabular version="3" rows="9" columns="2">
+<lyxtabular version="3" rows="10" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
@@ -214,6 +214,30 @@ evolutionary stable singularity of dispersal rate
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $k$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+probability that an individual present in a patch after dispersal was born
+ there
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 \begin_inset Formula $n$
 \end_inset
 
@@ -284,7 +308,58 @@ a)
 \end_layout
 
 \begin_layout Standard
-From T&F96, equation 9:
+A disperser enters a patch with rate:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N_{in}=d(1-c)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That disperser stays in a patch:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N_{stay}=1-d
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It might be imagined that a disperser lands in the same patch as it originated
+ in.
+ With an infinite amount of patches, this will never happen.
+\end_layout
+
+\begin_layout Standard
+Therefore, the relatedness k equals:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+k=\frac{N_{stay}}{N_{in}}=\frac{1-d}{(1-c)d}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+T&F96, equation 9, however, is different:
 \end_layout
 
 \begin_layout Standard
@@ -300,6 +375,21 @@ k=\frac{1-\hat{d}}{1-\hat{d}.c}
 
 \begin_layout Subsubsection*
 b) 
+\end_layout
+
+\begin_layout Standard
+My classmates have:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+d^{*}=\frac{c-R}{c^{2}-R}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -326,7 +416,6 @@ Solve
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Formula 
 \[
 \frac{dw}{dd}=\left(r\frac{\partial w}{\partial d}+R\frac{\partial w}{\partial\bar{d}}\right)_{d=\bar{d}=d^{*}}
@@ -441,7 +530,6 @@ W(d,\bar{d},d^{*})=\frac{{\left(1\text{−}c\right)\, d}}{{1\text{−}c\, d}}+\f
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Formula 
 \begin{eqnarray*}
 \frac{dw}{dd}=\left(r\frac{\partial w}{\partial d}+R\frac{\partial w}{\partial\bar{d}}\right)_{d=\bar{d}=d^{*}}=\left(\frac{{1\text{−}c}}{{1\text{−}c\, d}}+\frac{{\left(1\text{−}c\right)\, c\, d}}{{\left(1\text{−}c\, d\right)^{2}}}\text{−}\frac{{1}}{{\left(1\text{−}c\right)\, d+d+1}}\text{−}\frac{{\left(2\text{−}c\right)\,\left(1\text{−}d\right)}}{{\left(\left(1\text{−}c\right)\, d+d+1\right)^{2}}}\right)\, R\\
@@ -454,12 +542,10 @@ W(d,\bar{d},d^{*})=\frac{{\left(1\text{−}c\right)\, d}}{{1\text{−}c\, d}}+\f
 \end_layout
 
 \begin_layout Standard
-
 I guess this simplifies to this:
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Formula 
 \[
 \frac{dw}{dd}=\left(r\frac{\partial w}{\partial d}+R\frac{\partial w}{\partial\bar{d}}\right)_{d=\bar{d}=d^{*}}=R+r
@@ -483,12 +569,10 @@ Relatedness between disperser and other inividuals in the patch:
 \end_layout
 
 \begin_layout Standard
-Plugging it in, 
-using the Maxima equations:
+Plugging it in, using the Maxima equations:
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Tabular
 <lyxtabular version="3" rows="1" columns="1">
 <features tabularvalignment="middle">
@@ -498,7 +582,6 @@ using the Maxima equations:
 \begin_inset Text
 
 \begin_layout Plain Layout
-
 \begin_inset listings
 inline false
 status open
@@ -549,12 +632,10 @@ tex1(d_star(1));
 \end_layout
 
 \begin_layout Standard
-
 This results in:
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Formula 
 \[
 d^{*}=\frac{{2\text{−}2\, c}}{{2\text{−}2\, c^{2}}}

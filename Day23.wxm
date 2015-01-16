@@ -27,14 +27,16 @@ W(y,z) := (N * (1-y) * p(z)) + (N * y * (1-c) * p(y_star));
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-/* Exercise 1.C */
+/* Exercise 1.C: THIS IS CORRECT */
 /* W: fitness */
 /* d: dispersal rate mutant */
 /* d_bar: average dispersal rate of patch */
 /* d_star: average dispersal rate of population */
 /* c: cost of migration, you die with chance c */
-W(d,d_bar,d_star) := ((1-d)/(1+d_bar+((1-c)*d_star))) + (((1-c)*d)/(1-(c*d)));
+W(d,d_bar,d_star) := ((1-d)/(1+d_bar+((1-c)*d_star))) + (((1-c)*d)/(1-(c*d_star)));
 tex1(W(d,d_bar,d_star));
+ChangeInFitnessA(w,d) := ''(diff(W(d,d_bar,d_star),d));
+ChangeInFitnessB(w,d) := ''(diff(W(d,d_bar,d_star),d_bar));
 ChangeInFitness(w,d) := (r * ''(diff(W(d,d_bar,d_star),d))) + (R * ''(diff(W(d,d_bar,d_star),d_bar)));
 d_bar:d; 
 d_star:d;
