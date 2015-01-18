@@ -308,13 +308,13 @@ a)
 \end_layout
 
 \begin_layout Standard
-A disperser enters a patch with rate:
+The focal female stays in a patch:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-N_{in}=d(1-c)
+N_{stay}=1-d
 \]
 
 \end_inset
@@ -323,13 +323,14 @@ N_{in}=d(1-c)
 \end_layout
 
 \begin_layout Standard
-That disperser stays in a patch:
+Her presence will be diluted by unrelated dispersers that enters the patch
+ with rate:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-N_{stay}=1-d
+N_{in}=d(1-c)
 \]
 
 \end_inset
@@ -350,22 +351,7 @@ Therefore, the relatedness k equals:
 \begin_layout Standard
 \begin_inset Formula 
 \[
-k=\frac{N_{stay}}{N_{in}}=\frac{1-d}{(1-c)d}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-T&F96, equation 9, however, is different:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-k=\frac{1-\hat{d}}{1-\hat{d}.c}
+k=\frac{N_{stay}}{N_{stay}+N_{in}}=\frac{1-d}{1-d+(1-c)d}=\frac{1-d}{1-d+d-cd}=\frac{1-d}{1-cd}
 \]
 
 \end_inset
@@ -378,13 +364,13 @@ b)
 \end_layout
 
 \begin_layout Standard
-My classmates have:
+Combining these equations:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-d^{*}=\frac{c-R}{c^{2}-R}
+\Delta w=\delta p\left(-c+Rk\right)=0
 \]
 
 \end_inset
@@ -393,13 +379,43 @@ d^{*}=\frac{c-R}{c^{2}-R}
 \end_layout
 
 \begin_layout Standard
-From T&F96, equation 11:
+\begin_inset Formula 
+\[
+k=\frac{1-d}{1-cd}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Solving this for 
+\begin_inset Formula $d$
+\end_inset
+
+, calling the answer 
+\begin_inset Formula $d^{*}$
+\end_inset
+
+:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-d^{*}=\frac{\sqrt{1+4N(N-1)c^{2}}+1-2Nc}{\sqrt{1+4N(N-1)c^{2}}+1-2Nc^{2}}
+-c+R\left(\frac{1-d}{1-cd}\right)=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+d^{*}=\frac{c-R}{c^{2}-R}
 \]
 
 \end_inset
@@ -427,7 +443,8 @@ Solve
 \end_layout
 
 \begin_layout Standard
-Using the Maxima equations:
+This can be done by using these Maxima equations (and are checked by hand
+ as well):
 \end_layout
 
 \begin_layout Standard
@@ -451,17 +468,27 @@ W(d,d_bar,d_star)
 
 \begin_layout Plain Layout
 
-  := ((1-d)/(1+d_bar+((1-c)*d_star))) 
+  := ((1-d)/(1+d_bar+((1-c)*d_star)))
 \end_layout
 
 \begin_layout Plain Layout
 
-  + (((1-c)*d)/(1-(c*d)))
+  + (((1-c)*d)/(1-(c*d_star)))
 \end_layout
 
 \begin_layout Plain Layout
 
-; 
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+ChangeInFitnessA(w,d) := ''(diff(W(d,d_bar,d_star),d));
+\end_layout
+
+\begin_layout Plain Layout
+
+ChangeInFitnessB(w,d) := ''(diff(W(d,d_bar,d_star),d_bar));
 \end_layout
 
 \begin_layout Plain Layout
@@ -471,7 +498,7 @@ ChangeInFitness(w,d)
 
 \begin_layout Plain Layout
 
-  := (r * ''(diff(W(d,d_bar,d_star),d))) 
+  := (r * ''(diff(W(d,d_bar,d_star),d)))
 \end_layout
 
 \begin_layout Plain Layout
@@ -481,22 +508,22 @@ ChangeInFitness(w,d)
 
 \begin_layout Plain Layout
 
-; 
+;
 \end_layout
 
 \begin_layout Plain Layout
 
-d_bar:d;  
+d_bar:d;
 \end_layout
 
 \begin_layout Plain Layout
 
-d_star:d; 
+ d_star:d;
 \end_layout
 
 \begin_layout Plain Layout
 
-ChangeInFitness(w,d);
+ChangeInFitness(w,d); 
 \end_layout
 
 \end_inset
@@ -530,11 +557,22 @@ W(d,\bar{d},d^{*})=\frac{{\left(1\text{−}c\right)\, d}}{{1\text{−}c\, d}}+\f
 \end_layout
 
 \begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 \begin_inset Formula 
-\begin{eqnarray*}
-\frac{dw}{dd}=\left(r\frac{\partial w}{\partial d}+R\frac{\partial w}{\partial\bar{d}}\right)_{d=\bar{d}=d^{*}}=\left(\frac{{1\text{−}c}}{{1\text{−}c\, d}}+\frac{{\left(1\text{−}c\right)\, c\, d}}{{\left(1\text{−}c\, d\right)^{2}}}\text{−}\frac{{1}}{{\left(1\text{−}c\right)\, d+d+1}}\text{−}\frac{{\left(2\text{−}c\right)\,\left(1\text{−}d\right)}}{{\left(\left(1\text{−}c\right)\, d+d+1\right)^{2}}}\right)\, R\\
-+\left(\frac{{1\text{−}c}}{{1\text{−}c\, d}}+\frac{{\left(1\text{−}c\right)\, c\, d}}{{\left(1\text{−}c\, d\right)^{2}}}\text{−}\frac{{1}}{{\left(1\text{−}c\right)\, d+d+1}}\text{−}\frac{{\left(2\text{−}c\right)\,\left(1\text{−}d\right)}}{{\left(\left(1\text{−}c\right)\, d+d+1\right)^{2}}}\right)\, r
-\end{eqnarray*}
+\[
+\frac{\partial w(d,\bar{d},d^{*})}{\partial d}=\frac{{1\text{−}c}}{{1\text{−}c\,{\it d\_star}}}\text{−}\frac{{1}}{{\left(1\text{−}c\right)\,{\it d\_star}+{\it d\_bar}+1}}
+\]
 
 \end_inset
 
@@ -542,13 +580,32 @@ W(d,\bar{d},d^{*})=\frac{{\left(1\text{−}c\right)\, d}}{{1\text{−}c\, d}}+\f
 \end_layout
 
 \begin_layout Standard
-I guess this simplifies to this:
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\frac{\partial w(d,\bar{d},d^{*})}{\partial\bar{d}}=\text{−}\frac{{1\text{−}d}}{{\left(\left(1\text{−}c\right)\,{\it d\_star}+{\it d\_bar}+1\right)^{2}}}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{dw}{dd}=\left(r\frac{\partial w}{\partial d}+R\frac{\partial w}{\partial\bar{d}}\right)_{d=\bar{d}=d^{*}}=R+r
+\frac{dw}{dd}=\left(r\frac{\partial w}{\partial d}+R\frac{\partial w}{\partial\bar{d}}\right)_{d=\bar{d}=d^{*}}=\left(\frac{{1\text{−}c}}{{1\text{−}c\, d}}\text{−}\frac{{1}}{{\left(1\text{−}c\right)\, d+d+1}}\right)\, r\text{−}\frac{{\left(1\text{−}d\right)\, R}}{{\left(\left(1\text{−}c\right)\, d+d+1\right)^{2}}}
 \]
 
 \end_inset
@@ -651,7 +708,8 @@ e)
 \end_layout
 
 \begin_layout Standard
-Didn't she already???
+If the mother controls the dispersal, she will want to have only dispersers,
+ except for exactly one.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -789,6 +847,15 @@ This results in:
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection*
+Acknowledgements
+\end_layout
+
+\begin_layout Standard
+The answers of this exercise were greatly improved thanks to collaboration
+ with Nancy Obeng and Julie Perreau.
 \end_layout
 
 \begin_layout Subsubsection*
