@@ -1,0 +1,127 @@
+\documentclass{article}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\title{Day 23}
+\author{Richel Bilderbeek}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This article is created from within the CAS program Maxima
+and converted to PDF by using FOSS tools only, to assess the viability of this pipeline.As a testcase, the exercise 'Kin selection and the evolution of dispersal' was used,
+an obligatory exercise in the Evolutionary Theory Course given in 2014-2015 at the
+University of Groningen.
+\end{abstract}
+
+\section{Introduction}
+
+\LaTeX~is commonly used for writing publishable scientific articles\cite{gaudeul2006}.
+Algebraic manipulations can be done by a CAS, for example Maxima, Maple or Mathematica.
+Maxima is the only free and open-source program, and it is the oldest free and open-source computer algebra system, with development started in 1967 (as Macsyma) or 1982 (as MAXIMA).
+This article is an example of writing a \LaTeX~ article within Maxima
+
+Writing \LaTeX~ is slower and introduces more errors 
+then using Microsoft Word as a text editor \cite{knauff&nejasmic2014}.
+In this article, however, the text of a document is generated. \LaTeX~ can
+parse that text to create a document, like a Word .docx could do as well,
+with less markup (XML) added. Additionally, all tools in the current pipeline
+are FOSS, so anyone with an internet connection can access these without
+paying licensing costs.
+
+Maxima its capabilities is tested by doing the exercise 'Kin selection and the evolution of dispersal',
+an obligatory exercise in the Evolutionary Theory Course given in 2014-2015 at the
+University of Groningen.
+
+\section{Exercise}
+
+\begin{table}[here]
+  \centering
+  \begin{tabular}{ | r | l | }
+    \hline
+    symbol & description \\
+    \hline
+    $c$      & cost of dispersal, chance to die when dispersing \\
+    $d$      & dispersal rate of mutant \\
+    $d\_bar$  & dispersal rate of resident \\
+    $d\_star$ & evolutionary stable singularity of dispersal rate \\
+    $k$      & probability that an individual present in a patch after dispersal was born there \\
+    $n$      & Patch size (=number of females, as haploid) \\
+    \hline
+  \end{tabular}
+  \caption{Definitions}
+  \label{table:table_definition}
+\end{table}
+
+\subsection{a}
+
+The focal female stays in a patch:
+
+\begin{equation}
+{\it N\_stay}\left(d\right)=1-d\label{eq:a_1}
+\end{equation}
+
+Her presence will be diluted by unrelated dispersers that enter the patch with rate:
+
+\begin{equation}
+{\it N\_in}\left(d\right)=d\left(1-c\right)\label{eq:a_2}
+\end{equation}
+It might be imagined that a disperser lands in the same patch as it originated in. With an infinite amount of patches, this will never happen.
+Therefore, the relatedness k can be concluded to be $k = N\_stay / (N\_stay + N\_in)$, which can be solved for $d$:
+\begin{equation}
+k\left(d\right)={{1-d}\over{-d+d\left(1-c\right)+1}}\label{eq:a_3}
+\end{equation}
+\section{Discussion}
+
+Writing \LaTeX~within Maxima can be done, but it is a bit cumbersome:
+Maxima does not know \LaTeX~syntax and just creates contextless strings,
+which might not be compilable by \LaTeX.
+However, because the script does create a .tex file,
+this file can be inspected easily with a \LaTeX~tool like texmaker.
+
+\begin{thebibliography}{9}
+
+\bibitem{case2000}
+  Case, Ted J.
+  2000
+  An illustrated guide to theoretical ecology.
+
+\bibitem{gaudeul2006}
+  Gaudeul, A.
+  2006
+  Do Open Source Developers Respond to Competition?: The (La)TeX Case Study.
+  Available at SSRN: http://ssrn.com/abstract=908946 or http://dx.doi.org/10.2139/ssrn.908946
+
+\bibitem{knauff&nejasmic2014}
+  Knauff, M. and Nejasmic, J.
+  December 19, 2014
+  An Efficiency Comparison of Document Preparation Systems Used in Academic Research and Development.
+  PLoS ONE 9(12): e115069. doi: 10.1371/journal.pone.0115069
+
+\bibitem{otto&day2007}
+  Otto, Sarah P. and Day, T.
+  2007
+  A biologist's guide to mathematical modeling in ecology and evolution.
+  ISBN-13: 978-0-691-12344-8
+
+\end{thebibliography}
+
+\appendix
+
+\section{Script file}
+
+\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{Day23.sh}
+
+\section{Maxima file}
+
+\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{Day23.txt}
+
+\section{\LaTeX~file}
+
+\lstinputlisting[language=tex,showstringspaces=false,breaklines=true,frame=single]{Day23.tex}
+
+\end{document}

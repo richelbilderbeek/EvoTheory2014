@@ -1,0 +1,199 @@
+print("Use the LyX file instead");
+exit
+return
+terminate
+
+
+/* Maxima batch file */
+
+/* Load libraries */
+load("stringproc")$
+
+/* Input filename */
+bash_filename:"Day23.sh"$
+maxima_filename:"Day23.txt"$ /* this file */
+
+/* Output filenames */
+tex_filename:"Day23.tex"$
+
+/* Write results to TeX file */
+stream: openw(tex_filename)$
+printf(stream,"\\documentclass{article}~%")$
+printf(stream,"~%")$
+printf(stream,"\\usepackage{listings}~%")$
+printf(stream,"\\usepackage{graphicx}~%")$
+printf(stream,"~%")$
+printf(stream,"\\title{Day 23}~%")$
+printf(stream,"\\author{Richel Bilderbeek}~%")$
+printf(stream,"\\date{\\today}~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{document}~%")$
+printf(stream,"~%")$
+printf(stream,"\\maketitle~%")$
+printf(stream,"~%")$
+printf(stream,"\\begin{abstract}~%")$
+printf(stream,"This article is created from within the CAS program Maxima~%")$
+printf(stream,"and converted to PDF by using FOSS tools only, to assess the viability of this pipeline.")$
+printf(stream,"As a testcase, the exercise 'Kin selection and the evolution of dispersal' was used,~%")$
+printf(stream,"an obligatory exercise in the Evolutionary Theory Course given in 2014-2015 at the~%")$
+printf(stream,"University of Groningen.~%")$
+printf(stream,"\\end{abstract}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Introduction}~%")$
+printf(stream,"~%")$
+printf(stream,"\\LaTeX~~is commonly used for writing publishable scientific articles\\cite{gaudeul2006}.~%")$
+printf(stream,"Algebraic manipulations can be done by a CAS, for example Maxima, Maple or Mathematica.~%")$
+printf(stream,"Maxima is the only free and open-source program, and it is the oldest free and open-source computer algebra system, with development started in 1967 (as Macsyma) or 1982 (as MAXIMA).~%")$
+printf(stream,"This article is an example of writing a \\LaTeX~~ article within Maxima~%")$
+printf(stream,"~%")$
+printf(stream,"Writing \\LaTeX~~ is slower and introduces more errors ~%")$
+printf(stream,"then using Microsoft Word as a text editor \\cite{knauff&nejasmic2014}.~%")$
+printf(stream,"In this article, however, the text of a document is generated. \\LaTeX~~ can~%")$
+printf(stream,"parse that text to create a document, like a Word .docx could do as well,~%")$
+printf(stream,"with less markup (XML) added. Additionally, all tools in the current pipeline~%")$
+printf(stream,"are FOSS, so anyone with an internet connection can access these without~%")$
+printf(stream,"paying licensing costs.~%")$
+printf(stream,"~%")$
+printf(stream,"Maxima its capabilities is tested by doing the exercise 'Kin selection and the evolution of dispersal',~%")$
+printf(stream,"an obligatory exercise in the Evolutionary Theory Course given in 2014-2015 at the~%")$
+printf(stream,"University of Groningen.~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Exercise}~%")$
+
+printf(stream,"~%")$
+printf(stream,"\\begin{table}[here]~%")$
+printf(stream,"  \\centering~%")$
+printf(stream,"  \\begin{tabular}{ | r | l | }~%")$
+printf(stream,"    \\hline~%")$
+printf(stream,"    symbol & description \\\\~%")$
+printf(stream,"    \\hline~%")$
+printf(stream,"    $c$      & cost of dispersal, chance to die when dispersing \\\\~%")$
+printf(stream,"    $d$      & dispersal rate of mutant \\\\~%")$
+printf(stream,"    $d\\_bar$  & dispersal rate of resident \\\\~%")$
+printf(stream,"    $d\\_star$ & evolutionary stable singularity of dispersal rate \\\\~%")$
+printf(stream,"    $k$      & probability that an individual present in a patch after dispersal was born there \\\\~%")$
+printf(stream,"    $n$      & Patch size (=number of females, as haploid) \\\\~%")$
+printf(stream,"    \\hline~%")$
+printf(stream,"  \\end{tabular}~%")$
+printf(stream,"  \\caption{Definitions}~%")$
+printf(stream,"  \\label{table:table_definition}~%")$
+printf(stream,"\\end{table}~%")$
+printf(stream,"~%")$
+
+printf(stream,"\\subsection{a}~%")$
+
+printf(stream,"~%")$
+printf(stream,"The female (in this case identical to the number of non-dispersers) stays in a patch:~%")$
+printf(stream,"~%")$
+
+FuncNstay(d) := N_stay(d) = 1-d;
+
+printf(stream,"\\begin{equation}~%")$
+printf(stream,tex1(FuncNstay(d)))$ /* Use tex1 instead of tex(...,false) for non $$-enclosed output */
+printf(stream,"\\label{eq:a_1}~%")$
+printf(stream,"\\end{equation}~%")$
+
+
+ 
+printf(stream,"~%")$
+printf(stream,"Her presence will be diluted by unrelated dispersers that enter the patch with rate:~%")$
+printf(stream,"~%")$
+
+FuncNin(d) := N_in(d) = d(1-c);
+
+printf(stream,"\\begin{equation}~%")$
+printf(stream,tex1(FuncNin(d)))$ /* Use tex1 instead of tex(...,false) for non $$-enclosed output */
+printf(stream,"\\label{eq:a_2}~%")$
+printf(stream,"\\end{equation}~%")$
+
+printf(stream,"It might be imagined that a disperser lands in the same patch as it originated in. With an infinite amount of patches, this will never happen.~%")$
+printf(stream,"Therefore, the relatedness k can be concluded to be $k = N\\_stay / (N\\_stay + N\\_in)$, which can be solved for $d$:~%")$
+
+CalcK(d) := k(d) = rhs(FuncNstay(d)) / (rhs(FuncNstay(d)) + rhs(FuncNin(d)));
+
+printf(stream,"\\begin{equation}~%")$
+printf(stream,tex1(CalcK(d)))$ /* Use tex1 instead of tex(...,false) for non $$-enclosed output */
+printf(stream,"\\label{eq:a_3}~%")$
+printf(stream,"\\end{equation}~%")$
+
+
+
+
+
+
+
+
+/* Discussion */
+
+printf(stream,"\\section{Discussion}~%")$
+printf(stream,"~%")$
+printf(stream,"Writing \\LaTeX~~within Maxima can be done, but it is a bit cumbersome:~%")$
+printf(stream,"Maxima does not know \\LaTeX~~syntax and just creates contextless strings,~%")$
+printf(stream,"which might not be compilable by \\LaTeX.~%")$
+printf(stream,"However, because the script does create a .tex file,~%")$
+printf(stream,"this file can be inspected easily with a \\LaTeX~~tool like texmaker.~%")$
+printf(stream,"~%")$ 
+
+
+
+
+
+/* Bibliography */
+
+printf(stream,"\\begin{thebibliography}{9}~%")$
+printf(stream,"~%")$
+printf(stream,"\\bibitem{case2000}~%")$
+printf(stream,"  Case, Ted J.~%")$
+printf(stream,"  2000~%")$
+printf(stream,"  An illustrated guide to theoretical ecology.~%")$
+printf(stream,"~%")$
+printf(stream,"\\bibitem{gaudeul2006}~%")$
+printf(stream,"  Gaudeul, A.~%")$
+printf(stream,"  2006~%")$
+printf(stream,"  Do Open Source Developers Respond to Competition?: The (La)TeX Case Study.~%")$
+printf(stream,"  Available at SSRN: http://ssrn.com/abstract=908946 or http://dx.doi.org/10.2139/ssrn.908946~%")$
+printf(stream,"~%")$
+printf(stream,"\\bibitem{knauff&nejasmic2014}~%")$
+printf(stream,"  Knauff, M. and Nejasmic, J.~%")$
+printf(stream,"  December 19, 2014~%")$
+printf(stream,"  An Efficiency Comparison of Document Preparation Systems Used in Academic Research and Development.~%")$
+printf(stream,"  PLoS ONE 9(12): e115069. doi: 10.1371/journal.pone.0115069~%")$
+printf(stream,"~%")$
+printf(stream,"\\bibitem{otto&day2007}~%")$
+printf(stream,"  Otto, Sarah P. and Day, T.~%")$
+printf(stream,"  2007~%")$
+printf(stream,"  A biologist's guide to mathematical modeling in ecology and evolution.~%")$
+printf(stream,"  ISBN-13: 978-0-691-12344-8~%")$
+printf(stream,"~%")$
+   
+    
+
+    
+
+printf(stream,"\\end{thebibliography}~%")$
+printf(stream,"~%")$
+
+/* Appendix */
+
+printf(stream,"\\appendix~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Script file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,bash_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{Maxima file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=C++,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,maxima_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\section{\\LaTeX~~file}~%")$
+printf(stream,"~%")$
+printf(stream,"\\lstinputlisting[language=tex,showstringspaces=false,breaklines=true,frame=single]{")$
+printf(stream,tex_filename)$
+printf(stream,"}~%")$
+printf(stream,"~%")$
+printf(stream,"\\end{document}~%")$
+close(stream)$
