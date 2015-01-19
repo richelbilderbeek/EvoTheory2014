@@ -44,7 +44,7 @@ OptimalD(R) := (c - R) / ((c^2) - R);
 /* d_star: average dispersal rate of population */
 /* c: cost of migration, you die with chance c */
 kill(all);
-W(d,d_bar,d_star) := ((1-d)/(1+d_bar+((1-c)*d_star))) + (((1-c)*d)/(1-(c*d_star)));
+W(d,d_bar,d_star) := ((1-d)/(1-d_bar+((1-c)*d_star))) + (((1-c)*d)/(1-(c*d_star)));
 ChangeInFitnessA(w,d) := ''(diff(W(d,d_bar,d_star),d));
 ChangeInFitnessB(w,d) := ''(diff(W(d,d_bar,d_star),d_bar));
 ChangeInFitness(w,d) := (r * ''(ChangeInFitnessA(w,d))) + (R * ''(ChangeInFitnessB(w,d)));
@@ -52,7 +52,12 @@ d_bar:d;
 d_star:d;
 ChangeInFitness(w,d);
 tex1(ChangeInFitness(w,d));
-
+r:1;
+ChangeInFitness(w,d);
+OptimalDispersal(c,R) := ''(solve(ChangeInFitness(w,d)=0,d))[1];
+OptimalDispersal(c,1);
+tex1(OptimalDispersal(c,1));
+wxplot2d(rhs(OptimalDispersal(c,1)),[c,0.0001,1],[xlabel,"Cost"],[ylabel,"d_star"],[color,black]);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */

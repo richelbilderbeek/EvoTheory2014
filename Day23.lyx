@@ -468,7 +468,7 @@ W(d,d_bar,d_star)
 
 \begin_layout Plain Layout
 
-  := ((1-d)/(1+d_bar+((1-c)*d_star)))
+  := ((1-d)/(1-d_bar+((1-c)*d_star)))
 \end_layout
 
 \begin_layout Plain Layout
@@ -571,7 +571,7 @@ W(d,\bar{d},d^{*})=\frac{{\left(1\text{−}c\right)\, d}}{{1\text{−}c\, d}}+\f
 \color none
 \begin_inset Formula 
 \[
-\frac{\partial w(d,\bar{d},d^{*})}{\partial d}=\frac{{1\text{−}c}}{{1\text{−}c\,{\it d\_star}}}\text{−}\frac{{1}}{{\left(1\text{−}c\right)\,{\it d\_star}+{\it d\_bar}+1}}
+\frac{\partial w(d,\bar{d},d^{*})}{\partial d}=\frac{{1\text{−}c}}{{1\text{−}c\,{\it d\_star}}}\text{−}\frac{{1}}{{\left(1\text{−}c\right)\,{\it d\_star}\text{−}{\it d\_bar}+1}}
 \]
 
 \end_inset
@@ -605,7 +605,53 @@ W(d,\bar{d},d^{*})=\frac{{\left(1\text{−}c\right)\, d}}{{1\text{−}c\, d}}+\f
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{dw}{dd}=\left(r\frac{\partial w}{\partial d}+R\frac{\partial w}{\partial\bar{d}}\right)_{d=\bar{d}=d^{*}}=\left(\frac{{1\text{−}c}}{{1\text{−}c\, d}}\text{−}\frac{{1}}{{\left(1\text{−}c\right)\, d+d+1}}\right)\, r\text{−}\frac{{\left(1\text{−}d\right)\, R}}{{\left(\left(1\text{−}c\right)\, d+d+1\right)^{2}}}
+\frac{dw}{dd}=\left(r\frac{\partial w}{\partial d}+R\frac{\partial w}{\partial\bar{d}}\right)_{d=\bar{d}=d^{*}}=\left(\frac{{1\text{−}c}}{{1\text{−}c\, d}}\text{−}\frac{{1}}{{\left(1\text{−}c\right)\, d-\bar{d}+1}}\right)\, r\text{−}\frac{{\left(1\text{−}d\right)\, R}}{{\left(\left(1\text{−}c\right)\, d-\bar{d}+1\right)^{2}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When setting 
+\begin_inset Formula $r=1$
+\end_inset
+
+ (mother is totally related to her offspring, thanks to clonal reproduction),
+ solve 
+\begin_inset Formula $\frac{dw}{dd}=0$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{dw}{dd}=\left(\frac{{1\text{−}c}}{{1\text{−}c\, d}}\text{−}\frac{{1}}{{\left(1\text{−}c\right)\, d-\bar{d}+1}}\right)\, r\text{−}\frac{{\left(1\text{−}d\right)\, R}}{{\left(\left(1\text{−}c\right)\, d-\bar{d}+1\right)^{2}}}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\frac{{1\text{−}c}}{{1\text{−}c\, d}}\text{−}\frac{{1}}{{\left(1\text{−}c\right)\, d-\bar{d}+1}}\right)\,−\frac{{\left(1\text{−}d\right)\, R}}{{\left(\left(1\text{−}c\right)\, d-\bar{d}+1\right)^{2}}}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+d=\frac{{R\text{−}c}}{{R-c^{2}}}
 \]
 
 \end_inset
@@ -618,11 +664,11 @@ d)
 \end_layout
 
 \begin_layout Standard
-Relatedness between disperser and other inividuals in the patch:
-\end_layout
+In this case, we can also assume 
+\begin_inset Formula $R=1$
+\end_inset
 
-\begin_layout Standard
-?
+.
 \end_layout
 
 \begin_layout Standard
@@ -645,32 +691,92 @@ status open
 
 \begin_layout Plain Layout
 
-d_star(N) 
+W(d,d_bar,d_star)
 \end_layout
 
 \begin_layout Plain Layout
 
-  :=  (sqrt(1+4*N*(N-1)*(c^2))+1-(2*N*c))
+  := ((1-d)/(1-d_bar+((1-c)*d_star)))
 \end_layout
 
 \begin_layout Plain Layout
 
-    / (sqrt(1+4*N*(N-1)*(c^2))+1-(2*N*(c^2)))
+  + (((1-c)*d)/(1-(c*d_star)));
 \end_layout
 
 \begin_layout Plain Layout
 
-; 
+ChangeInFitnessA(w,d) := ''(diff(W(d,d_bar,d_star),d));
 \end_layout
 
 \begin_layout Plain Layout
 
-d_star(1); 
+ChangeInFitnessB(w,d) := ''(diff(W(d,d_bar,d_star),d_bar));
 \end_layout
 
 \begin_layout Plain Layout
 
-tex1(d_star(1));
+ChangeInFitness(w,d) 
+\end_layout
+
+\begin_layout Plain Layout
+
+  := (r * ''(ChangeInFitnessA(w,d))) 
+\end_layout
+
+\begin_layout Plain Layout
+
+  + (R * ''(ChangeInFitnessB(w,d)));
+\end_layout
+
+\begin_layout Plain Layout
+
+d_bar:d;  d_star:d; 
+\end_layout
+
+\begin_layout Plain Layout
+
+ChangeInFitness(w,d); 
+\end_layout
+
+\begin_layout Plain Layout
+
+r:1; 
+\end_layout
+
+\begin_layout Plain Layout
+
+ChangeInFitness(w,d); 
+\end_layout
+
+\begin_layout Plain Layout
+
+OptimalDispersal(c,R) 
+\end_layout
+
+\begin_layout Plain Layout
+
+  := ''(solve(ChangeInFitness(w,d)=0,d))[1]; 
+\end_layout
+
+\begin_layout Plain Layout
+
+OptimalDispersal(c,1); 
+\end_layout
+
+\begin_layout Plain Layout
+
+wxplot2d(
+\end_layout
+
+\begin_layout Plain Layout
+
+  rhs(OptimalDispersal(c,1)),[c,0.0001,1],
+\end_layout
+
+\begin_layout Plain Layout
+
+  [xlabel,"Cost"],[ylabel,"d_star"],[color,black]);
 \end_layout
 
 \end_inset
@@ -695,12 +801,31 @@ This results in:
 \begin_layout Standard
 \begin_inset Formula 
 \[
-d^{*}=\frac{{2\text{−}2\, c}}{{2\text{−}2\, c^{2}}}
+d^{*}=\frac{{1\text{−}c}}{{1\text{−}c^{2}}}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+And the plot:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Day23_1_d.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So, the less cost is associated with dispersal, the more offspring should
+ disperse.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -736,8 +861,6 @@ status open
 
 \begin_layout Plain Layout
 
-d_bar(n,c) := (1 + (2*n*c) - sqrt(1 + (4*n*(n-1)*(c^2))))/(2*n*c*(1+c));
- 
 \end_layout
 
 \begin_layout Plain Layout
