@@ -972,6 +972,16 @@ This results in:
 
 \end_layout
 
+\begin_layout Standard
+This leads us to conclude that the bigger patches are, the less dispersal
+ there should be.
+ This can be explained as such: the bigger a remote patch, the more offspring
+ you need to disperse to occupy it.
+ The drawback is that per offspring a cost needs to be paid, rendering the
+ residents stronger.
+ 
+\end_layout
+
 \begin_layout Subsubsection*
 Acknowledgements
 \end_layout
